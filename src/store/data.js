@@ -401,11 +401,11 @@ export const useDataStore = defineStore('data', () => {
 		data: resumeData,
 
 		// Getters
-		getData() {
+		async getData() {
 			return this.data
 		},
 
 		// Actions
-		doNothing() { }
+		async doNothing() { }
 	}
 })

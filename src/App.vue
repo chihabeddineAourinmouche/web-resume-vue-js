@@ -1,5 +1,5 @@
 <template>
-  <Main :theme="data.theme">
+  <Main v-if="data" :theme="data.theme">
     <background :theme="data.theme" />
     <resume :theme="data.theme">
       <Header>
@@ -47,12 +47,18 @@
   import Experience from './components/Experience.vue'
   import Projects from './components/Projects.vue'
 
-  import { ref, computed } from 'vue'
+  import { ref } from 'vue'
 
   import { useDataStore } from './store/data'
   const dataStore = useDataStore()
   
-  const data = ref(dataStore.getData())
+  const data = ref(null)
+
+  const fetchData = async () => {
+    data.value = await dataStore.getData()
+  }
+
+  fetchData()
 
   /*
   * TO USE A MODAL, CREATE A MODAL COMPONENT INSTANCE WITH A
