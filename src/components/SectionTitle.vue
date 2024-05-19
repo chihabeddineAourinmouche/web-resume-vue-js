@@ -1,0 +1,42 @@
+<template>
+	<a
+		:id="id"
+		class="section-title"
+		:href="`#${id}`"
+		:style="{
+			textAlign: randomPosition < 1 ? 'left' : randomPosition < 2 ? 'center' : 'right',
+			color: theme.secondaryColor
+		}"
+	>{{ title }}</a>
+</template>
+
+<script setup>
+	import { randomInt } from '../utils/random_utils.js'
+	import { computed } from 'vue'
+	
+	const props = defineProps({
+		title: { type: String },
+		theme: { type: Object }
+	})
+
+	const randomPosition = computed(() => randomInt(0, 3))
+	const id = computed(() => `section-title-${props.title.toLowerCase()}`)
+</script>
+
+<style scoped>
+	.section-title {
+		max-width: 700px;
+		width: 100%;
+		margin-top: 20px;
+		padding: 0px 50px;
+		outline: none;
+		font-size: 1.3em;
+		font-weight: bold;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.section-title:hover {
+		text-decoration: underline;
+	}
+</style>
