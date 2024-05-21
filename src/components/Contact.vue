@@ -4,22 +4,23 @@
 			<i class="fa-solid fa-location-dot" />
 			<a
 				target="_blank"
-				:href="`https://www.google.com/maps/place/${!['', undefined, null].includes(data.address.street) ? data.address.street + ' - ' : ''}${data.address.city} ${data.address.postal_code}, ${data.address.state}, ${data.address.country}`"
-			>{{ `${!['', undefined, null].includes(data.address.street) ? data.address.street + ' - ' : ''}${data.address.city} ${data.address.postal_code}, ${data.address.state}, ${data.address.country}` }}</a>
+				:href="`https://www.google.com/maps/place/${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}`"
+			>{{ `${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}` }}</a>
 		</div>
 		<div class="contact-email">
 			<i class="fa-regular fa-envelope" />
 			<a
 				target="_blank"
-				:href="`mailto:${data.emailAddress}`"
-			>{{ data.emailAddress }}</a>
+				:href="`mailto:${emailAddress}`"
+			>{{ emailAddress }}</a>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	const props = defineProps({
-		data: { type: Object }
+		address: { type: Object },
+		emailAddress: { type: String },
 	})
 </script>
 

@@ -3,24 +3,24 @@
     <background :theme="data.theme" />
     <resume :theme="data.theme">
       <Header>
-        <profile-picture :theme="data.theme" :data="{ profilePicture: getUrl(`assets/${data.image}`) }" draggable="false" />
-        <name-and-title :theme="data.theme" :data="{ name: `${data.firstName} ${data.lastName}`, title: data.title }" />
+        <profile-picture :theme="data.theme" :profilePicture="getUrl(`assets/${data.image}`)" draggable="false" />
+        <name-and-title :theme="data.theme" :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
       </Header>
       <section-title :theme="data.theme"  title="About" />
-      <about :theme="data.theme" :data="{ about: data.about }" />
+      <about :theme="data.theme" :about="data.about" />
       <section-title :theme="data.theme" title="Skills" />
-      <skills :theme="data.theme" :data="{ skills: data.skills }" />
+      <skills :theme="data.theme" :skills="data.skills" />
       <section-title :theme="data.theme" title="Contact & Languages" />
       <contact-and-languages>
-        <contact :theme="data.theme" :data="{ address: data.address, emailAddress: data.emailAddress }" />
-        <languages :theme="data.theme" :data="{ languages: data.languages }" />
+        <contact :theme="data.theme" :address="data.address" :emailAddress="data.emailAddress" />
+        <languages :theme="data.theme" :languages="data.languages" />
       </contact-and-languages>
       <section-title :theme="data.theme" title="Education" />
-      <education :theme="data.theme" :data="{ educationUnits: data.educationUnits }" />
+      <education :theme="data.theme" :educationUnits="data.educationUnits" />
       <section-title :theme="data.theme" title="Experience" />
-      <experience :theme="data.theme" :data="{ experienceUnits: data.experienceUnits }" />
-      <section-title :theme="data.theme" title="Projects" />
-      <projects :theme="data.theme" :projects="data.projects" />
+      <experience :theme="data.theme" :experienceUnits="data.experienceUnits" />
+      <section-title v-if="data.projects.length" :theme="data.theme" title="Projects" />
+      <projects v-if="data.projects.length" :theme="data.theme" :projects="data.projects" />
     </resume>
   </Main>
   <!--
@@ -64,9 +64,9 @@
     domStore.setTitle(`${data.value.firstName} ${data.value.lastName}`)
   }
 
-  fetchData()
-
   const getUrl = (p) => new URL(`./${p}`, import.meta.url).href
+  
+  fetchData()
 
   /*
   * TO USE A MODAL, CREATE A MODAL COMPONENT INSTANCE WITH A

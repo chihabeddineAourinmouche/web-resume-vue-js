@@ -1,6 +1,6 @@
 <template>
 	<div id="languages">
-		<div class="language" v-for="l in data.languages" :key="l.name">
+		<div class="language" v-for="l in languages" :key="l.name">
 			<span class="language-level" :style="{ color: color(l.level) }">{{ l.levelName }}</span>
 			<span class="language-name">{{ l.name }}</span>
 		</div>
@@ -11,7 +11,7 @@
 	import { computed } from 'vue'
 	
 	const props = defineProps({
-		data: { type: Object }
+		languages: { type: Array }
 	})
 
 	const color = (l) => {

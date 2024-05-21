@@ -127,13 +127,13 @@ const resumeData = {
 			id: 1,
 			name: "Web Resume",
 			description: "Developing a web application 'Web Resume' allowing users to create dynamic, interactive resumes with multimedia elements. This solution aims to Increase user engagement through embedded videos and skills visualizations. Work in progress...",
-			skills: ['Python3', 'Django', 'TypeScript', 'Vue3', 'Git', 'Docker', 'Bash'],
+			skills: ['Python3', 'Django', 'TypeScript', 'JavaScript', 'Vue3', 'Pinia', 'Git', 'Docker', 'Bash'],
 		},
 		{
 			id: 2,
 			name: "BabelJS",
 			description: "I participated in a video game development contest created by Microsoft featuring their Web based 3D Rendering Technology Babylon.JS. As part of a 3-student team, we managed to enter the contest with a video game that gathered most of the aspect of an intreging video game. We managed to win the prize of the best graphics (For the second time in a row.)",
-			skills: ['JavaScript', 'Babylon.js', 'Blender', 'Photoshop'],
+			skills: ['JavaScript', 'NodeJS', 'Babylon.js', 'Blender', 'Photoshop'],
 		},
 		{
 			id: 3,

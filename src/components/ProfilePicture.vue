@@ -2,7 +2,7 @@
 	<img
 		id="profile-picture"
 		:style="{ borderColor: theme.secondaryColor }"
-		:src="data.profilePicture"
+		:src="profilePicture"
 		alt="profile picture"
 		@click="$emit('onClick')"
 	/><!-- TODO - REMOVE @click event -->
@@ -11,7 +11,7 @@
 <script setup>
 	defineEmits([ 'onClick' ])// TODO - REMOVE onClick emit
 	defineProps({
-		data: { type: Object },
+		profilePicture: { type: String },
 		theme: { type: Object },
 	})
 </script>

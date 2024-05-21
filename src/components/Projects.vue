@@ -1,13 +1,16 @@
 <template>
 	<div id="projects">
-		<input
-			type="text"
-			placeholder="Search By Skills ( separated by ',' )"
-			class="search"
-			v-model="searchString"
-			:style="{ borderBottomColor: theme.tertiaryColor }"
-		/>
-		<div v-for="project in filteredData" :key="project.id" class="project">
+		<div class="search-container">
+			<i class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
+			<input
+				class="search-input"
+				type="text"
+				:placeholder="`ex. ${placeholderSkills}`"
+				v-model="searchString"
+				:style="{ borderBottomColor: theme.tertiaryColor }"
+			/>
+		</div>
+		<div v-for="project in projectsFilteredBySkills" :key="project.id" class="project">
 			<h3 class="project-title">{{ project.name }}</h3>
 			<p class="project-description">{{ project.description }}</p>
 			<div class="project-skills">
@@ -26,14 +29,14 @@
 	import { ref, computed } from 'vue'
 
 	const props = defineProps({
-		projects: { type: Object },
+		projects: { type: Array },
 		theme: { type: Object },
 	})
 
 	const searchString = ref('')
 
-	const filteredData = computed(() => props.projects.filter(project => {
-		if (searchString.value === '' || searchString.value.replace(' ', '') === '') {
+	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
+		if (searchString.value === '' || searchString.value.replaceAll(' ', '') === '') {
 			return true
 		}
 		const searchStrings = searchString.value.split(',').filter(s => s !== '')
@@ -41,11 +44,26 @@
 			return true
 		}
 		return searchStrings.some(item => 
-			project.name.toLowerCase().includes(item.toLowerCase()) ||
-			project.description.toLowerCase().includes(item.toLowerCase()) ||
-			project.skills.some(skill => skill.toLowerCase().includes(item.toLowerCase()))
+			project.name.replaceAll(' ', '').toLowerCase().includes(item.replaceAll(' ', '').toLowerCase()) ||
+			project.description.replaceAll(' ', '').toLowerCase().includes(item.replaceAll(' ', '').toLowerCase()) ||
+			project.skills.some(skill => skill.replaceAll(' ', '').toLowerCase().includes(item.replaceAll(' ', '').toLowerCase()))
 		)
 	}))
+
+	const placeholderSkills = computed(() => {
+		if (props.projects.length) {
+			const skills = projectsSortedBySkillCountDesc.value[0].skills
+			return skills.length
+				? skills.length > 1
+					? skills.sort(() => Math.random() - 0.5).slice(0, 2).join(',')
+					: skills[0]
+				: "leadership,photoshop"
+		} else {
+			return "leadership,photoshop"
+		}
+	})
+
+	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
 </script>
 
 <style scoped>
@@ -71,14 +89,24 @@
 			padding: 20px 5%;
 		}
 	}
-	.search {
+	.search-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+	.search-icon {
+		position: absolute;
+		left: 10px;
+	}
+	.search-input {
 		outline: none;
 		border: none;
 		border-bottom-width: 2px;
 		border-bottom-style: solid;
-		/* width: 200px; */
+		width: 100%;
 		height: 50px;
-		padding: 5px;
+		padding: 5px 5px 5px 35px;
 		cursor: text;
 	}
 	.project {

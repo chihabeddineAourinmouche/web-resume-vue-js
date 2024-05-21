@@ -1,13 +1,14 @@
 <template>
 	<div id="name-and-title">
-		<h2 id="name" :style="{ color: theme.secondaryColor }">{{ data.name }}</h2>
-		<h3 id="title">{{ data.title }}</h3>
+		<h2 id="name" :style="{ color: theme.secondaryColor }">{{ name }}</h2>
+		<h3 id="title">{{ title }}</h3>
 	</div>
 </template>
 
 <script setup>
 	defineProps({
-		data: { type: Object },
+		name: { type: String },
+		title: { type: String },
 		theme: { type: Object },
 	})
 </script>

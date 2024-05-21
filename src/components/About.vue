@@ -1,10 +1,10 @@
 <template>
-	<p id="about">{{ data.about }}</p>
+	<p id="about">{{ about }}</p>
 </template>
 
 <script setup>
 	defineProps({
-		data: { type: Object }
+		about: { type: String },
 	})
 </script>
 

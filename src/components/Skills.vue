@@ -1,7 +1,7 @@
 <template>
 	<div id="skills">
-		<div class="skill" v-for="s in data.skills" :key="s.name">
-			<star-rating :data="{ rating: s.level }" />
+		<div class="skill" v-for="s in skillsSortedBylevelDesc" :key="s.name">
+			<star-rating :rating="s.level" />
 			<span class="skill-name">{{ s.name }}</span>
 			<span class="skill-category">( {{ s.category }} )</span>
 		</div>
@@ -10,10 +10,14 @@
 
 <script setup>
 	import StarRating from './StarRating.vue'
+
+	import { computed } from 'vue'
 	
-	defineProps({
-		data: { type: Object }
+	const props = defineProps({
+		skills: { type: Array }
 	})
+
+	const skillsSortedBylevelDesc = computed(() => props.skills.sort((a, b) => b.level - a.level))
 </script>
 
 <style scoped>

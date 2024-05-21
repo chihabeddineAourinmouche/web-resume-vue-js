@@ -1,6 +1,6 @@
 <template>
 	<div id="education">
-		<div v-for="educationUnit in data.educationUnits" :key="educationUnit.id" class="education-unit">
+		<div v-for="educationUnit in educationUnits" :key="educationUnit.id" class="education-unit">
 			<h3 class="education-unit-title">{{ `${educationUnit.endYear}, ${educationUnit.major}, ${educationUnit.school}` }}</h3>
 			<p class="education-unit-description">{{ educationUnit.description }}</p>
 		</div>
@@ -9,7 +9,7 @@
 
 <script setup>
 	defineProps({
-		data: { type: Object }
+		educationUnits: { type: Array }
 	})
 </script>
 

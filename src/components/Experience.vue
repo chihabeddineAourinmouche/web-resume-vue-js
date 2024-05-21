@@ -1,6 +1,6 @@
 <template>
 	<div id="experience">
-		<div v-for="experienceUnit in data.experienceUnits" :key="experienceUnit.id" class="experience-unit">
+		<div v-for="experienceUnit in experienceUnits" :key="experienceUnit.id" class="experience-unit">
 			<h3 class="experience-unit-title">{{ `${experienceUnit.startYear}-${experienceUnit.endYear}, ${experienceUnit.jobTitle} @ ${experienceUnit.company}` }}</h3>
 			<p class="experience-unit-description">{{ experienceUnit.description }}</p>
 		</div>
@@ -9,7 +9,7 @@
 
 <script setup>
 	defineProps({
-		data: { type: Object }
+		experienceUnits: { type: Array }
 	})
 </script>
 
