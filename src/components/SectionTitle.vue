@@ -36,9 +36,9 @@
 		padding: 0px 50px;
 		outline: none;
 		font-size: 1.3em;
-		font-weight: bold;
 		cursor: pointer;
 		text-decoration: none;
+		font-family: Verdana, sans-serif;
 	}
 
 	.section-title:hover {
