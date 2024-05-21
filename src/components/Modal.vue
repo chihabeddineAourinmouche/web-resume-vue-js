@@ -17,14 +17,17 @@
 <script setup>
 	import { ref } from 'vue'
 
+	import { useDomStore } from '../store/dom'
+	const domStore = useDomStore()
+
 	const isOpen = ref(false)
 	
 	defineProps({
 		theme: { type: Object },
 	})
 
-	const lockBackgroundScroll = () => document.body.style.overflowY = 'hidden'
-	const unlockBackgroundScroll = () => document.body.style.overflowY = 'auto'
+	const lockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'hidden' })
+	const unlockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'auto' })
 
 	const switchOpenClose = () => {
 		isOpen.value = !isOpen.value

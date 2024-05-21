@@ -13,7 +13,11 @@
 <script setup>
 	import { generateSizesPositions, randomInt } from '../utils/random_utils.js'
 	import { calculateSubsetRatio } from '../utils/calculations.js'
-	import { watch, ref } from 'vue'
+
+	import { ref } from 'vue'
+	
+	import { useDomStore } from '../store/dom'
+	const domStore = useDomStore()
 
 	const MIN_WIDTH = 350
 	
@@ -28,12 +32,12 @@
 		const randomSubset = faClassNames
 			.slice()
 			.sort(() => Math.random() - 0.5)
-			.slice(0, Math.floor(faClassNames.length * calculateSubsetRatio(Math.max(window.innerWidth, MIN_WIDTH))))
+			.slice(0, Math.floor(faClassNames.length * calculateSubsetRatio(Math.max(domStore.getWindowInnerWidth(), MIN_WIDTH))))
 		const sizesPositions = generateSizesPositions(
 			randomSubset.length,
-			Math.max(window.innerWidth, MIN_WIDTH),
+			Math.max(domStore.getWindowInnerWidth(), MIN_WIDTH),
 			200, 30,
-			Math.min(window.innerWidth / 10, 70)
+			Math.min(domStore.getWindowInnerWidth() / 10, 70)
 		)
 		for (let i = 0; i < randomSubset.length; i++) {
 			const sp = sizesPositions[i]
@@ -55,9 +59,9 @@
 	}
 
 	const watchResize = () => {
-		let previousWidth = window.innerWidth
+		let previousWidth = domStore.getWindowInnerWidth()
 		window.addEventListener('resize', () => {
-			const currentWidth = window.innerWidth
+			const currentWidth = domStore.getWindowInnerWidth()
 			const widthDifference = currentWidth - previousWidth
 			if (widthDifference !== 0 && !(currentWidth < MIN_WIDTH && previousWidth < MIN_WIDTH)) {
 				onHorizontalResize()

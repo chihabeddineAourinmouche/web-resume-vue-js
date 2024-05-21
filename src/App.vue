@@ -30,7 +30,9 @@
 </template>
 
 <script setup>
-  import Modal from './components/Modal.vue'
+  /*
+  * import Modal from './components/Modal.vue'
+  */
   import Main from './components/Main.vue'
   import Background from './components/Background.vue'
   import Resume from './components/Resume.vue'
@@ -51,11 +53,15 @@
 
   import { useDataStore } from './store/data'
   const dataStore = useDataStore()
+
+  import { useDomStore } from './store/dom'
+	const domStore = useDomStore()
   
   const data = ref(null)
 
   const fetchData = async () => {
     data.value = await dataStore.getData()
+    domStore.setTitle(`${data.value.firstName} ${data.value.lastName}`)
   }
 
   fetchData()
