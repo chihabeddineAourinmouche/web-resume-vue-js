@@ -4,15 +4,20 @@
 		:style="{ borderColor: theme.secondaryColor }"
 		:src="profilePicture"
 		alt="profile picture"
-		@click="$emit('onClick')"
-	/><!-- TODO - REMOVE @click event -->
+	/>
 </template>
 
 <script setup>
-	defineEmits([ 'onClick' ])// TODO - REMOVE onClick emit
+	import { ref } from 'vue'
+
+	const theme = ref()
+
+	import { useThemeStore } from "../store/theme"
+	const themeStore = useThemeStore()
+	theme.value = themeStore.getTheme()
+
 	defineProps({
 		profilePicture: { type: String },
-		theme: { type: Object },
 	})
 </script>
 

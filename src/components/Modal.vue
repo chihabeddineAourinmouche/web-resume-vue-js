@@ -15,16 +15,19 @@
 </template>
 
 <script setup>
+	
 	import { ref } from 'vue'
+
+	const theme = ref()
+
+	import { useThemeStore } from "../store/theme"
+	const themeStore = useThemeStore()
+	theme.value = themeStore.getTheme()
 
 	import { useDomStore } from '../store/dom'
 	const domStore = useDomStore()
 
 	const isOpen = ref(false)
-	
-	defineProps({
-		theme: { type: Object },
-	})
 
 	const lockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'hidden' })
 	const unlockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'auto' })

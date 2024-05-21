@@ -22,7 +22,7 @@
 			padding: 20px;
 		}
 	}
-	@media screen and (min-width: 351px) {
+	@media screen and (min-width: 350px) {
 		#about {
 			padding: 20px 10%;
 		}

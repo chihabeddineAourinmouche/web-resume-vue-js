@@ -22,7 +22,7 @@
 		}
 	}
 	
-	@media (min-width: 491px) {
+	@media (min-width: 490px) {
 		#contact-languages {
 			flex-direction: row;
 			align-items: flex-start;

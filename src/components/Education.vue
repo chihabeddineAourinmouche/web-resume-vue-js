@@ -30,7 +30,7 @@
 			padding: 20px 20px;
 		}
 	}
-	@media (min-width: 351px) {
+	@media (min-width: 350px) {
 		#education {
 			padding: 20px 5%;
 		}

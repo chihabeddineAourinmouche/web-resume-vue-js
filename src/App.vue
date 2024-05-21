@@ -56,12 +56,16 @@
 
   import { useDomStore } from '@/store/dom'
 	const domStore = useDomStore()
+
+  import { useThemeStore } from './store/theme'
+  const themeStore = useThemeStore()
   
   const data = ref(null)
 
   const fetchData = async () => {
     data.value = await dataStore.getData()
     domStore.setTitle(`${data.value.firstName} ${data.value.lastName}`)
+    themeStore.setTheme(data.value.theme)
   }
 
   const getUrl = (p) => new URL(`./${p}`, import.meta.url).href

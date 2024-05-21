@@ -28,9 +28,14 @@
 <script setup>
 	import { ref, computed } from 'vue'
 
+	const theme = ref()
+
+	import { useThemeStore } from "../store/theme"
+	const themeStore = useThemeStore()
+	theme.value = themeStore.getTheme()
+
 	const props = defineProps({
 		projects: { type: Array },
-		theme: { type: Object },
 	})
 
 	const searchString = ref('')
@@ -84,7 +89,7 @@
 		}
 	}
 
-	@media (min-width: 351px) {
+	@media (min-width: 350px) {
 		#projects {
 			padding: 20px 5%;
 		}

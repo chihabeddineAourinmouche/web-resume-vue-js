@@ -38,10 +38,10 @@
 	}
 	@media (max-width: 490px) {
 		.star-rating {
-			font-size: .6rem;
+			font-size: .6em;
 		}
 	}
-	@media (min-width: 491px) {
+	@media (min-width: 490px) {
 		.star-rating {
 			font-size: .8em;
 		}

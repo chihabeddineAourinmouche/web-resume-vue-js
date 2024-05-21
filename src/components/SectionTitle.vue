@@ -12,11 +12,16 @@
 
 <script setup>
 	import { randomInt } from '../utils/random_utils.js'
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
+
+	const theme = ref()
+
+	import { useThemeStore } from "../store/theme"
+	const themeStore = useThemeStore()
+	theme.value = themeStore.getTheme()
 	
 	const props = defineProps({
 		title: { type: String },
-		theme: { type: Object }
 	})
 
 	const randomPosition = computed(() => randomInt(0, 3))

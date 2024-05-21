@@ -15,6 +15,12 @@
 	import { calculateSubsetRatio } from '../utils/calculations.js'
 
 	import { ref } from 'vue'
+
+	const theme = ref()
+
+	import { useThemeStore } from "../store/theme"
+	const themeStore = useThemeStore()
+	theme.value = themeStore.getTheme()
 	
 	import { useDomStore } from '../store/dom'
 	const domStore = useDomStore()
@@ -23,12 +29,8 @@
 	
 	const particles = ref([])
 	
-	const props = defineProps({
-		theme: { type: Object },
-	})
-	
 	const generateParticles = () => {
-		const faClassNames = [].concat(...Array(3).fill(props.theme.backgroundIcons))
+		const faClassNames = [].concat(...Array(3).fill(theme.value.backgroundIcons))
 		const randomSubset = faClassNames
 			.slice()
 			.sort(() => Math.random() - 0.5)
