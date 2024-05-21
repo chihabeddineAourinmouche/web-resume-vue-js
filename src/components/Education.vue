@@ -24,14 +24,16 @@
 	  flex-direction: column;
 	  justify-content: space-between;
 	  gap: 20px;
-
-	  @media (max-width: 350px) {
-		padding: 20px 20px;
-	  }
-
-	  @media (min-width: 351px) {
-		padding: 20px 5%;
-	  }
+	}
+	@media (max-width: 350px) {
+		#education {
+			padding: 20px 20px;
+		}
+	}
+	@media (min-width: 351px) {
+		#education {
+			padding: 20px 5%;
+		}
 	}
 	.education-unit {
 		display: flex;

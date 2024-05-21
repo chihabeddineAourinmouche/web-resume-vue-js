@@ -1,6 +1,13 @@
 <template>
 	<div id="projects">
-		<div v-for="project in data.projects" :key="project.id" class="project">
+		<input
+			type="text"
+			placeholder="Search By Skills ( separated by ',' )"
+			class="search"
+			v-model="searchString"
+			:style="{ borderBottomColor: theme.tertiaryColor }"
+		/>
+		<div v-for="project in filteredData" :key="project.id" class="project">
 			<h3 class="project-title">{{ project.name }}</h3>
 			<p class="project-description">{{ project.description }}</p>
 			<div class="project-skills">
@@ -16,10 +23,29 @@
 </template>
 
 <script setup>
-	defineProps({
-		data: { type: Object },
+	import { ref, computed } from 'vue'
+
+	const props = defineProps({
+		projects: { type: Object },
 		theme: { type: Object },
 	})
+
+	const searchString = ref('')
+
+	const filteredData = computed(() => props.projects.filter(project => {
+		if (searchString.value === '' || searchString.value.replace(' ', '') === '') {
+			return true
+		}
+		const searchStrings = searchString.value.split(',').filter(s => s !== '')
+		if (searchStrings.length === 0) {
+			return true
+		}
+		return searchStrings.some(item => 
+			project.name.toLowerCase().includes(item.toLowerCase()) ||
+			project.description.toLowerCase().includes(item.toLowerCase()) ||
+			project.skills.some(skill => skill.toLowerCase().includes(item.toLowerCase()))
+		)
+	}))
 </script>
 
 <style scoped>
@@ -33,14 +59,27 @@
 	  flex-direction: column;
 	  justify-content: space-between;
 	  gap: 20px;
+	}
+	@media (max-width: 350px) {
+		#projects {
+			padding: 20px 20px;
+		}
+	}
 
-	  @media (max-width: 350px) {
-		padding: 20px 20px;
-	  }
-
-	  @media (min-width: 351px) {
-		padding: 20px 5%;
-	  }
+	@media (min-width: 351px) {
+		#projects {
+			padding: 20px 5%;
+		}
+	}
+	.search {
+		outline: none;
+		border: none;
+		border-bottom-width: 2px;
+		border-bottom-style: solid;
+		/* width: 200px; */
+		height: 50px;
+		padding: 5px;
+		cursor: text;
 	}
 	.project {
 		display: flex;

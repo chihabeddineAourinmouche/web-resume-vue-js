@@ -14,7 +14,7 @@
 		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 		padding: 20px;
 		display: flex;
-		justify-dontent: space-between;
+		justify-content: space-between;
 		align-items: center;
 		gap: 30px;
 	}

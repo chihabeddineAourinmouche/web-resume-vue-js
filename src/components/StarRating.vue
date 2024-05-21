@@ -1,6 +1,6 @@
 <template>
 	<span class="star-rating" :style="{ color: color }">
-		<i v-for="(star, index) in stars" :key="`star-${i}`" :class="star" />
+		<i v-for="(star, index) in stars" :key="`star-${index}`" :class="star" />
 	</span>
 </template>
 
@@ -35,12 +35,14 @@
 		text-align: right;
 		display: flex;
 		align-items: center;
-
-		@media (max-width: 490px) {
+	}
+	@media (max-width: 490px) {
+		.star-rating {
 			font-size: .6rem;
 		}
-		
-		@media (min-width: 491px) {
+	}
+	@media (min-width: 491px) {
+		.star-rating {
 			font-size: .8em;
 		}
 	}

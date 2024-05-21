@@ -24,13 +24,15 @@
 	  flex-direction: column;
 	  justify-content: space-between;
 	  gap: 20px;
-
-	  @media (max-width: 350px) {
-		padding: 20px 20px;
+	}
+	@media (max-width: 350px) {
+	  #experience {
+		  padding: 20px 20px;
 	  }
-
-	  @media (min-width: 351px) {
-		padding: 20px 5%;
+	}
+	@media (min-width: 351px) {
+	  #experience {
+		  padding: 20px 5%;
 	  }
 	}
 	.experience-unit {

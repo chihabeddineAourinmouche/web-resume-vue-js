@@ -1,0 +1,49 @@
+# NODE.JS
+node_modules/
+node_modules/*
+node_modules/**/*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# BUILD PRODUCTS
+/dist
+/dist/*
+/dist/**/*
+
+# EDITOR DIRECTORIES AND FILES
+.idea/
+.vscode/
+.vscode/*
+.vscode/**/*
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# LOGS
+logs/
+
+# LOCAL ENV FILES
+.env.local
+.env.*.local
+
+# TESTING FRAMEWORKS
+jest/
+**/__tests__/__snapshots__/
+**/__tests__/helpers.js
+
+# BROWSERSYNC
+.browsersync
+
+# STORYBOOK
+.storybook/
+
+# DEPENDENCY LOCKER (PACKAGE-LOCK.JSON, YARN.LOCK)
+package-lock.json
+yarn.lock
+
+# OS SPECIFIC
+.DS_Store

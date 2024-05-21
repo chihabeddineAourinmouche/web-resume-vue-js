@@ -20,7 +20,7 @@
       <section-title :theme="data.theme" title="Experience" />
       <experience :theme="data.theme" :data="{ experienceUnits: data.experienceUnits }" />
       <section-title :theme="data.theme" title="Projects" />
-      <projects :theme="data.theme" :data="{ projects: data.projects }" />
+      <projects :theme="data.theme" :projects="data.projects" />
     </resume>
   </Main>
   <!--
