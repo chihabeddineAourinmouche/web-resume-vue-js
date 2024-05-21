@@ -17,6 +17,6 @@
     max-width: 700px;
     min-width: 350px;
     min-height: 100vh;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
   }
 </style>
