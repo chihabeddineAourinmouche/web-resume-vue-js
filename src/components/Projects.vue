@@ -36,7 +36,6 @@
 	const themeStore = useThemeStore()
 
 	// REF
-	const theme = ref()
 	const searchString = ref('')
 
 	// PROPS
@@ -45,6 +44,7 @@
 	})
 
 	// COMPUTED
+	const theme = computed(themeStore.getTheme)
 	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
 		if (searchString.value === '' || searchString.value.replaceAll(' ', '') === '') {
 			return true
@@ -72,11 +72,6 @@
 		}
 	})
 	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
-
-	// METHODS
-	const setTheme = () => { theme.value = themeStore.getTheme() }
-
-	setTheme()
 </script>
 
 <style scoped>

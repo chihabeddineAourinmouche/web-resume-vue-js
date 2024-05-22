@@ -12,7 +12,7 @@
 
 <script setup>
 	// VUE
-	import { ref } from 'vue'
+	import { computed, onBeforeMount, onBeforeUpdate, onUpdated, ref } from 'vue'
 
 	// UTILS
 	import { generateSizesPositions, randomInt } from '../utils/random'
@@ -29,11 +29,13 @@
 	const MIN_WIDTH = 350
 
 	// REF
-	const theme = ref()
-	const particles = ref([])
+	const ptcls = ref([])
+	
+	// COMPUTED
+	const theme = computed(themeStore.getTheme)
+	const particles  = computed(() => ptcls.value)
 
 	// METHODS
-	const setTheme = () => { theme.value = themeStore.getTheme() }
 	const generateParticles = () => {
 		const faClassNames = [].concat(...Array(3).fill(theme.value.backgroundIcons))
 		const randomSubset = faClassNames
@@ -49,10 +51,10 @@
 		for (let i = 0; i < randomSubset.length; i++) {
 			const sp = sizesPositions[i]
 			const cn = randomSubset[i]
-			particles.value.push({ id: `${cn}-${i}`, className: cn, size: sp.size, position: sp.position })
+			ptcls.value.push({ id: `${cn}-${i}`, className: cn, size: sp.size, position: sp.position })
 		}
 	}
-	const clearParticles = () => particles.value = []
+	const clearParticles = () => ptcls.value = []
 	const updateParticles = () => {
 		clearParticles()
 		generateParticles()
@@ -71,8 +73,8 @@
 		})
 	}
 
-	setTheme()
-	init()
+	onBeforeMount(init)
+	onBeforeUpdate(updateParticles)
 	watchResize()
 </script>
 

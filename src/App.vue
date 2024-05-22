@@ -1,8 +1,6 @@
 <template>
-  <Main v-if="data && uiLanguage">
+  <Main v-if="data && uiLanguage && theme">
     <background />
-    <!-- TODO - REMOVE THE FOLLOWING LINE -->
-    {{ uiLanguage }}{{ ' - Indicator of ui language refresh' }}
     <resume>
       <Header>
         <profile-picture :profilePicture="getUrl(`assets/${data.image}`)" draggable="false" />
@@ -29,8 +27,8 @@
     TO ADD A MODAL CONTAINER INSTANCE
     <modal :theme="data.theme" ref="modalRef">CONTENT OF MODAL</modal>
   -->
-  <modal ref="modalRef">
-    <language-picker :languages="uiLanguages" @pick="setUiLanguage" />
+  <modal @onSelfClose="modalSelfClose" ref="modalRef">
+    <language-picker :languages="uiLanguages" @pick="setUiLanguage" ref="languagePickerRef" />
   </modal>
 </template>
 
@@ -55,7 +53,7 @@
   import Projects from '@/components/Projects.vue'
 
   // VUE
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted, onBeforeMount } from 'vue'
 
   // STORE
   import { useDataStore } from '@/store/data'
@@ -64,9 +62,8 @@
   import { useUiLanguageStore } from './store/uiLanguage'
 
   // REF
-  const data = ref(null)
   const modalRef = ref()
-  const uiLanguages = ref(['en'])
+  const languagePickerRef = ref()
 
   // STORE OBJECTS
   const dataStore = useDataStore()
@@ -74,30 +71,33 @@
   const uiLanguageStore = useUiLanguageStore()
 
   // COMPUTED PROPERTIES
-  const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+  const uiLanguage = computed(uiLanguageStore.getUiLanguage)
+  const data = computed(() => dataStore.getData(uiLanguage.value))
+  const uiLanguages = computed(dataStore.getUiLanguages)
+  const theme = computed(dataStore.getTheme)
 
   // METHODS
-  const setUiLanguages = (ls) => { uiLanguages.value = ls }
+  const getUrl = (p) => new URL(`./${p}`, import.meta.url).href
+  const setTheme = () => { themeStore.setTheme(theme.value) }
   const openModal = () => { modalRef.value && modalRef.value.open() }
   const closeModal = () => { modalRef.value && modalRef.value.close() }
+  const modalSelfClose = () => { languagePickerRef.value && languagePickerRef.value.cancelPicking() }
   const setUiLanguage = (l) => {
     uiLanguageStore.setUiLanguage(l)
     closeModal()
+    setTitle(`${data.value.firstName} ${data.value.lastName}`)
   }
   const fetchData = async () => {
-    data.value = await dataStore.getData()
-    setTitle(`${data.value.firstName} ${data.value.lastName}`)
-    themeStore.setTheme(data.value.theme)
-    setUiLanguages(data.value.uiLanguages)
+    await dataStore.fetchData()
+    setTheme()
   }
-  const getUrl = (p) => new URL(`./${p}`, import.meta.url).href
   
   // LIFECYCLE HOOKS
+  onBeforeMount(fetchData)
   onMounted(() => {
-    uiLanguage.value ?? openModal()
+    !uiLanguage.value && openModal()
+    data.value && setTitle(`${data.value.firstName} ${data.value.lastName}`)
   })
-
-  fetchData()
 
   /*
   * TO USE A MODAL, CREATE A MODAL COMPONENT INSTANCE WITH A

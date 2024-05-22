@@ -1,13 +1,9 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useThemeStore = defineStore('theme', () => {
 	return {
-		theme: {// DEFAULT THEME
-			primaryColor: "#efefef",
-			secondaryColor: "#b35949",
-			tertiaryColor: "#d6c6c3",
-			backgroundIcons: []
-		},
+		theme: ref({}),
 
 		// Getters
 		getTheme() { return this.theme },

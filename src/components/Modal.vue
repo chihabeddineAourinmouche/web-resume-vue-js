@@ -25,7 +25,7 @@
 	*/
 	
 	// VUE
-	import { ref } from 'vue'
+	import { ref, computed } from 'vue'
 	
 	// STORE
 	import { useThemeStore } from "../store/theme"
@@ -35,10 +35,13 @@
 	const themeStore = useThemeStore()
 	
 	// REF
-	const theme = ref()
 	const isOpen = ref(false)
+
+	// EMITS
+	const emit = defineEmits([ 'onSelfClose' ])
 	
-	theme.value = themeStore.getTheme()
+	// COMPUTED
+	const theme = computed(themeStore.getTheme)
 
 	// METHODS
 	const lockBackgroundScroll = () => setBodyStyle({ overflowY: 'hidden' })
@@ -49,12 +52,14 @@
 		switchOpenClose()
 	}
 	const close = () => {
+		emit('onSelfClose')
 		unlockBackgroundScroll()
 		switchOpenClose()
 	}
 
 	// EXPOSE
 	defineExpose({ open, close })
+
 </script>
 
 <style scoped>
@@ -66,7 +71,7 @@
 		min-width: 350px;
 		height: 100vh;
 		min-height: 350px;
-		background-color: rgba(0, 0, 0, .1);
+		background-color: rgba(0, 0, 0, .9);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -94,8 +99,5 @@
 		max-height: 290px;
 		overflow-y: auto;
 		padding: 0 10px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 </style>

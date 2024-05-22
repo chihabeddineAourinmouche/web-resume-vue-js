@@ -7,7 +7,7 @@
 
 <script setup>
 	// VUE
-	import { ref } from 'vue'
+	import { computed } from 'vue'
 
 	// STORE
 	import { useThemeStore } from "../store/theme"
@@ -15,19 +15,14 @@
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
 	
-	// REF
-	const theme = ref()
+	// COMPUTED
+	const theme = computed(themeStore.getTheme)
 	
 	// PROPS
 	defineProps({
 		name: { type: String },
 		title: { type: String },
 	})
-
-	// METHODS
-	const setTheme = () => { theme.value = themeStore.getTheme() }
-
-	setTheme()
 </script>
 
 <style scoped>

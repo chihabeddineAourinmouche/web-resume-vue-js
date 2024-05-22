@@ -12,7 +12,7 @@
 
 <script setup>
 	// VUE
-	import { computed, ref } from 'vue'
+	import { computed } from 'vue'
 
 	// UTILS
 	import { randomInt } from '../utils/random.js'
@@ -23,22 +23,15 @@
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
 
-	// REF
-	const theme = ref()
-	
-	// PROPDS
+	// PROPS
 	const props = defineProps({
 		title: { type: String },
 	})
 
 	// COMPUTED
+	const theme = computed(themeStore.getTheme)
 	const alignment = computed(() => randomInt(0, 3))
 	const id = computed(() => `section-title-${props.title.toLowerCase()}`)
-
-	// METHODS
-	const setTheme = () => { theme.value = themeStore.getTheme() }
-
-	setTheme()
 </script>
 
 <style scoped>

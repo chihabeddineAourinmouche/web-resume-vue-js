@@ -3,12 +3,14 @@ import { getItem, setItem } from '../utils/localStorage'
 
 const KEY_NAME = 'uiLanguage'
 
+const getUiLanguage = () => getItem(KEY_NAME)
+
 export const useUiLanguageStore = defineStore('uiLanguage', () => {
 	return {
 		uiLanguage: null,
 
 		// GETTERS
-		getUiLanguage() { return getItem(KEY_NAME) ?? this.uiLanguage },
+		getUiLanguage() { return getUiLanguage() ?? this.uiLanguage },
 
 		// ACTIONS
 		setUiLanguage(language) {
@@ -17,3 +19,7 @@ export const useUiLanguageStore = defineStore('uiLanguage', () => {
 		}
 	}
 })
+
+export {
+	getUiLanguage
+}
