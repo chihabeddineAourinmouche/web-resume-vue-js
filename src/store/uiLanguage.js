@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
-import { getItem, setItem, removeItem, clear } from '../utils/localStorage'
+import { getItem, setItem } from '../utils/localStorage'
+
+const KEY_NAME = 'uiLanguage'
 
 export const useUiLanguageStore = defineStore('uiLanguage', () => {
 	return {
 		uiLanguage: null,
 
-		// Getters
-		getUiLanguage() { return getItem('uiLanguage') ?? this.uiLanguage },
+		// GETTERS
+		getUiLanguage() { return getItem(KEY_NAME) ?? this.uiLanguage },
 
-		// Actions
+		// ACTIONS
 		setUiLanguage(language) {
-			setItem('uiLanguage', language)
+			setItem(KEY_NAME, language)
 			this.uiLanguage = language
 		}
 	}

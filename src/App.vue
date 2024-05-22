@@ -2,7 +2,7 @@
   <Main v-if="data && uiLanguage">
     <background />
     <!-- TODO - REMOVE THE FOLLOWING LINE -->
-    {{ uiLanguage }}
+    {{ uiLanguage }}{{ ' - Indicator of ui language refresh' }}
     <resume>
       <Header>
         <profile-picture :profilePicture="getUrl(`assets/${data.image}`)" draggable="false" />
