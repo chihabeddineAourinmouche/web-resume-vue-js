@@ -5,12 +5,15 @@
 </template>
 
 <script setup>
+	// VUE
 	import { computed } from 'vue'
 	
+	// PROPS
 	const props = defineProps({
 		rating: { type: String }
 	})
 	
+	// COMPUTED
 	const color = computed(() => {
 		const rating = parseFloat(props.rating)
 		return rating <= 1 ? '#bd3a3a' : rating <= 2 ? '#cc9670' : rating <= 3 ? '#b5cc70' : rating <= 4 ? '#78cc70' : '#70adcc'

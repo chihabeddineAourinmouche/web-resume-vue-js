@@ -9,14 +9,18 @@
 </template>
 
 <script setup>
+	// COMPONENTS
 	import StarRating from './StarRating.vue'
 
+	// VUE
 	import { computed } from 'vue'
-	
+
+	// PROPS
 	const props = defineProps({
 		skills: { type: Array }
 	})
 
+	// COMPUTED
 	const skillsSortedBylevelDesc = computed(() => props.skills.sort((a, b) => b.level - a.level))
 </script>
 

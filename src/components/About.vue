@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+	// PROPS
 	defineProps({
 		about: { type: String },
 	})

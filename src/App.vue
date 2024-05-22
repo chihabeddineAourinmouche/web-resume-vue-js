@@ -1,38 +1,43 @@
 <template>
-  <Main v-if="data" :theme="data.theme">
-    <background :theme="data.theme" />
-    <resume :theme="data.theme">
+  <Main v-if="data && uiLanguage">
+    <background />
+    <!-- TODO - REMOVE THE FOLLOWING LINE -->
+    {{ uiLanguage }}
+    <resume>
       <Header>
-        <profile-picture :theme="data.theme" :profilePicture="getUrl(`assets/${data.image}`)" draggable="false" />
-        <name-and-title :theme="data.theme" :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
+        <profile-picture :profilePicture="getUrl(`assets/${data.image}`)" draggable="false" />
+        <name-and-title :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
       </Header>
-      <section-title :theme="data.theme"  title="About" />
-      <about :theme="data.theme" :about="data.about" />
-      <section-title :theme="data.theme" title="Skills" />
-      <skills :theme="data.theme" :skills="data.skills" />
-      <section-title :theme="data.theme" title="Contact & Languages" />
+      <section-title  title="About" />
+      <about :about="data.about" />
+      <section-title title="Skills" />
+      <skills :skills="data.skills" />
+      <section-title title="Contact & Languages" />
       <contact-and-languages>
-        <contact :theme="data.theme" :address="data.address" :emailAddress="data.emailAddress" />
-        <languages :theme="data.theme" :languages="data.languages" />
+        <contact :address="data.address" :emailAddress="data.emailAddress" />
+        <languages :languages="data.languages" />
       </contact-and-languages>
-      <section-title :theme="data.theme" title="Education" />
-      <education :theme="data.theme" :educationUnits="data.educationUnits" />
-      <section-title :theme="data.theme" title="Experience" />
-      <experience :theme="data.theme" :experienceUnits="data.experienceUnits" />
-      <section-title v-if="data.projects.length" :theme="data.theme" title="Projects" />
-      <projects v-if="data.projects.length" :theme="data.theme" :projects="data.projects" />
+      <section-title title="Education" />
+      <education :educationUnits="data.educationUnits" />
+      <section-title title="Experience" />
+      <experience :experienceUnits="data.experienceUnits" />
+      <section-title v-if="data.projects.length" title="Projects" />
+      <projects v-if="data.projects.length" :projects="data.projects" />
     </resume>
   </Main>
   <!--
     TO ADD A MODAL CONTAINER INSTANCE
     <modal :theme="data.theme" ref="modalRef">CONTENT OF MODAL</modal>
   -->
+  <modal ref="modalRef">
+    <language-picker :languages="uiLanguages" @pick="setUiLanguage" />
+  </modal>
 </template>
 
 <script setup>
-  /*
-  * import Modal from '@/components/Modal.vue'
-  */
+  // COMPONENTS
+  import Modal from '@/components/Modal.vue'
+  import LanguagePicker from '@/components/LanguagePicker.vue'
   import Main from '@/components/Main.vue'
   import Background from '@/components/Background.vue'
   import Resume from '@/components/Resume.vue'
@@ -49,27 +54,49 @@
   import Experience from '@/components/Experience.vue'
   import Projects from '@/components/Projects.vue'
 
-  import { ref } from 'vue'
+  // VUE
+  import { ref, computed, onMounted } from 'vue'
 
+  // STORE
   import { useDataStore } from '@/store/data'
-  const dataStore = useDataStore()
-
-  import { useDomStore } from '@/store/dom'
-	const domStore = useDomStore()
-
+  import { setTitle } from '@/utils/dom'
   import { useThemeStore } from './store/theme'
-  const themeStore = useThemeStore()
-  
-  const data = ref(null)
+  import { useUiLanguageStore } from './store/uiLanguage'
 
+  // REF
+  const data = ref(null)
+  const modalRef = ref()
+  const uiLanguages = ref(['en'])
+
+  // STORE OBJECTS
+  const dataStore = useDataStore()
+  const themeStore = useThemeStore()
+  const uiLanguageStore = useUiLanguageStore()
+
+  // COMPUTED PROPERTIES
+  const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+
+  // METHODS
+  const setUiLanguages = (ls) => { uiLanguages.value = ls }
+  const openModal = () => { modalRef.value && modalRef.value.open() }
+  const closeModal = () => { modalRef.value && modalRef.value.close() }
+  const setUiLanguage = (l) => {
+    uiLanguageStore.setUiLanguage(l)
+    closeModal()
+  }
   const fetchData = async () => {
     data.value = await dataStore.getData()
-    domStore.setTitle(`${data.value.firstName} ${data.value.lastName}`)
+    setTitle(`${data.value.firstName} ${data.value.lastName}`)
     themeStore.setTheme(data.value.theme)
+    setUiLanguages(data.value.uiLanguages)
   }
-
   const getUrl = (p) => new URL(`./${p}`, import.meta.url).href
   
+  // LIFECYCLE HOOKS
+  onMounted(() => {
+    uiLanguage.value ?? openModal()
+  })
+
   fetchData()
 
   /*

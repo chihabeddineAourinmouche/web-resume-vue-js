@@ -391,7 +391,8 @@ const resumeData = {
 			'fa-brands fa-docker',
 			'fa-brands fa-firefox-browser',
 		]
-	}
+	},
+	uiLanguages: ['en', 'sp'],
 }
 
 import { defineStore } from 'pinia'

@@ -26,20 +26,25 @@
 </template>
 
 <script setup>
+	// VUE
 	import { ref, computed } from 'vue'
 
-	const theme = ref()
-
+	// STORE
 	import { useThemeStore } from "../store/theme"
-	const themeStore = useThemeStore()
-	theme.value = themeStore.getTheme()
 
+	// STORE OBJECTS
+	const themeStore = useThemeStore()
+
+	// REF
+	const theme = ref()
+	const searchString = ref('')
+
+	// PROPS
 	const props = defineProps({
 		projects: { type: Array },
 	})
 
-	const searchString = ref('')
-
+	// COMPUTED
 	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
 		if (searchString.value === '' || searchString.value.replaceAll(' ', '') === '') {
 			return true
@@ -54,7 +59,6 @@
 			project.skills.some(skill => skill.replaceAll(' ', '').toLowerCase().includes(item.replaceAll(' ', '').toLowerCase()))
 		)
 	}))
-
 	const placeholderSkills = computed(() => {
 		if (props.projects.length) {
 			const skills = projectsSortedBySkillCountDesc.value[0].skills
@@ -67,8 +71,12 @@
 			return "leadership,photoshop"
 		}
 	})
-
 	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
+
+	// METHODS
+	const setTheme = () => { theme.value = themeStore.getTheme() }
+
+	setTheme()
 </script>
 
 <style scoped>

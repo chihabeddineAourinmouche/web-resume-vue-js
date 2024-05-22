@@ -11,35 +11,40 @@
 </template>
 
 <script setup>
-	import { generateSizesPositions, randomInt } from '../utils/random_utils.js'
-	import { calculateSubsetRatio } from '../utils/calculations.js'
-
+	// VUE
 	import { ref } from 'vue'
 
-	const theme = ref()
+	// UTILS
+	import { generateSizesPositions, randomInt } from '../utils/random'
+	import { calculateSubsetRatio } from '../utils/calculations'
+	import { getWindowInnerWidth } from '@/utils/dom'
 
+	// STORE
 	import { useThemeStore } from "../store/theme"
-	const themeStore = useThemeStore()
-	theme.value = themeStore.getTheme()
-	
-	import { useDomStore } from '../store/dom'
-	const domStore = useDomStore()
 
+	// STORE OBJECTS
+	const themeStore = useThemeStore()
+	
+	// CONSTS
 	const MIN_WIDTH = 350
-	
+
+	// REF
+	const theme = ref()
 	const particles = ref([])
-	
+
+	// METHODS
+	const setTheme = () => { theme.value = themeStore.getTheme() }
 	const generateParticles = () => {
 		const faClassNames = [].concat(...Array(3).fill(theme.value.backgroundIcons))
 		const randomSubset = faClassNames
 			.slice()
 			.sort(() => Math.random() - 0.5)
-			.slice(0, Math.floor(faClassNames.length * calculateSubsetRatio(Math.max(domStore.getWindowInnerWidth(), MIN_WIDTH))))
+			.slice(0, Math.floor(faClassNames.length * calculateSubsetRatio(Math.max(getWindowInnerWidth(), MIN_WIDTH))))
 		const sizesPositions = generateSizesPositions(
 			randomSubset.length,
-			Math.max(domStore.getWindowInnerWidth(), MIN_WIDTH),
+			Math.max(getWindowInnerWidth(), MIN_WIDTH),
 			200, 30,
-			Math.min(domStore.getWindowInnerWidth() / 10, 70)
+			Math.min(getWindowInnerWidth() / 10, 70)
 		)
 		for (let i = 0; i < randomSubset.length; i++) {
 			const sp = sizesPositions[i]
@@ -52,18 +57,12 @@
 		clearParticles()
 		generateParticles()
 	}
-	const onHorizontalResize = () => {
-		updateParticles()
-	}
-
-	const init = () => {
-		generateParticles()
-	}
-
+	const onHorizontalResize = () => updateParticles()
+	const init = () => generateParticles()
 	const watchResize = () => {
-		let previousWidth = domStore.getWindowInnerWidth()
+		let previousWidth = getWindowInnerWidth()
 		window.addEventListener('resize', () => {
-			const currentWidth = domStore.getWindowInnerWidth()
+			const currentWidth = getWindowInnerWidth()
 			const widthDifference = currentWidth - previousWidth
 			if (widthDifference !== 0 && !(currentWidth < MIN_WIDTH && previousWidth < MIN_WIDTH)) {
 				onHorizontalResize()
@@ -72,6 +71,7 @@
 		})
 	}
 
+	setTheme()
 	init()
 	watchResize()
 </script>

@@ -4,28 +4,41 @@
 		class="section-title"
 		:href="`#${id}`"
 		:style="{
-			textAlign: randomPosition < 1 ? 'left' : randomPosition < 2 ? 'center' : 'right',
+			textAlign: alignment < 1 ? 'left' : alignment < 2 ? 'center' : 'right',
 			color: theme.secondaryColor
 		}"
 	>{{ title }}</a>
 </template>
 
 <script setup>
-	import { randomInt } from '../utils/random_utils.js'
+	// VUE
 	import { computed, ref } from 'vue'
 
-	const theme = ref()
+	// UTILS
+	import { randomInt } from '../utils/random.js'
 
+	// STORE
 	import { useThemeStore } from "../store/theme"
+
+	// STORE OBJECTS
 	const themeStore = useThemeStore()
-	theme.value = themeStore.getTheme()
+
+	// REF
+	const theme = ref()
 	
+	// PROPDS
 	const props = defineProps({
 		title: { type: String },
 	})
 
-	const randomPosition = computed(() => randomInt(0, 3))
+	// COMPUTED
+	const alignment = computed(() => randomInt(0, 3))
 	const id = computed(() => `section-title-${props.title.toLowerCase()}`)
+
+	// METHODS
+	const setTheme = () => { theme.value = themeStore.getTheme() }
+
+	setTheme()
 </script>
 
 <style scoped>

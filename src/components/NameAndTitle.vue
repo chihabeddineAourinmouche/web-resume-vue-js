@@ -6,18 +6,28 @@
 </template>
 
 <script setup>
+	// VUE
 	import { ref } from 'vue'
 
-	const theme = ref()
-
+	// STORE
 	import { useThemeStore } from "../store/theme"
-	const themeStore = useThemeStore()
-	theme.value = themeStore.getTheme()
 
+	// STORE OBJECTS
+	const themeStore = useThemeStore()
+	
+	// REF
+	const theme = ref()
+	
+	// PROPS
 	defineProps({
 		name: { type: String },
 		title: { type: String },
 	})
+
+	// METHODS
+	const setTheme = () => { theme.value = themeStore.getTheme() }
+
+	setTheme()
 </script>
 
 <style scoped>

@@ -15,38 +15,46 @@
 </template>
 
 <script setup>
+	/*
+	* IN ORDER TO USE THIS COMPONENT, FOLLOW THE FOLLOWING STEPS:
+	* - WITHIN THE PARENT, CREATE AN INSTANCE IN THE TEMPLATE WITH A REFERENCE (ex: modalRef)
+	* - THEN WITHIN THE SCRIPT, CREATE A ref NAMED THE SAME AS THE REFERENCE USED IN THE TEMPLATE
+	* - TO OPEN THE MODAL FROM THE PARENT, USE THE SYNTAX: modalRef.value ?? modalRef.value.open()
+	* - TO CLOSE THE MODAL FROM THE PARENT, USE THE SYNTAX: modalRef.value ?? modalRef.value.close()
+	* IT IS IMPORTANT THAT THE REF USED IN THE TEMPLATE CAN BE USED AS NAME FOR A VARIABLE*
+	*/
 	
+	// VUE
 	import { ref } from 'vue'
-
-	const theme = ref()
-
+	
+	// STORE
 	import { useThemeStore } from "../store/theme"
+	import { setBodyStyle } from '@/utils/dom'
+	
+	// STORE OBJECTS
 	const themeStore = useThemeStore()
+	
+	// REF
+	const theme = ref()
+	const isOpen = ref(false)
+	
 	theme.value = themeStore.getTheme()
 
-	import { useDomStore } from '../store/dom'
-	const domStore = useDomStore()
-
-	const isOpen = ref(false)
-
-	const lockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'hidden' })
-	const unlockBackgroundScroll = () => domStore.setBodyStyle({ overflowY: 'auto' })
-
-	const switchOpenClose = () => {
-		isOpen.value = !isOpen.value
-	}
-
+	// METHODS
+	const lockBackgroundScroll = () => setBodyStyle({ overflowY: 'hidden' })
+	const unlockBackgroundScroll = () => setBodyStyle({ overflowY: 'auto' })
+	const switchOpenClose = () => { isOpen.value = !isOpen.value }
 	const open = () => {
 		lockBackgroundScroll()
 		switchOpenClose()
 	}
-
 	const close = () => {
 		unlockBackgroundScroll()
 		switchOpenClose()
 	}
 
-	defineExpose({ open })
+	// EXPOSE
+	defineExpose({ open, close })
 </script>
 
 <style scoped>
@@ -58,7 +66,7 @@
 		min-width: 350px;
 		height: 100vh;
 		min-height: 350px;
-		background-color: rgba(0, 0, 0, .9);
+		background-color: rgba(0, 0, 0, .1);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -86,5 +94,8 @@
 		max-height: 290px;
 		overflow-y: auto;
 		padding: 0 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>

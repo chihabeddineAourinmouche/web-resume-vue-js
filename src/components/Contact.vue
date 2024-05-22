@@ -18,7 +18,8 @@
 </template>
 
 <script setup>
-	const props = defineProps({
+	// PROPS
+	defineProps({
 		address: { type: Object },
 		emailAddress: { type: String },
 	})

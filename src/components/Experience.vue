@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+	// PROPS
 	defineProps({
 		experienceUnits: { type: Array }
 	})

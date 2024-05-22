@@ -8,17 +8,27 @@
 </template>
 
 <script setup>
+	// VUE
 	import { ref } from 'vue'
 
+	// STORE
+	import { useThemeStore } from "../store/theme"
+
+	// STORE OBJECTS
+	const themeStore = useThemeStore()
+
+	// REF
 	const theme = ref()
 
-	import { useThemeStore } from "../store/theme"
-	const themeStore = useThemeStore()
-	theme.value = themeStore.getTheme()
-
+	// PROPS
 	defineProps({
 		profilePicture: { type: String },
 	})
+
+	//METHODS
+	const setTheme = () => { theme.value = themeStore.getTheme() }
+
+	setTheme()
 </script>
 
 <style scoped>

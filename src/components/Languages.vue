@@ -8,12 +8,15 @@
 </template>
 
 <script setup>
+	// VUE
 	import { computed } from 'vue'
 	
-	const props = defineProps({
+	// PROPS
+	defineProps({
 		languages: { type: Array }
 	})
 
+	// METHODS
 	const color = (l) => {
 		const level = l.toLowerCase()
 		return level === 'beginner' ? '#bd3a3a' : level === 'intermediate' ? '#cc9670' : level === 'proficient' ? '#b5cc70' : '#70adcc'
