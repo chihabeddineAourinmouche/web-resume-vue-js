@@ -20,7 +20,7 @@
 				<span class="skill-name">{{ s.name }}</span>
 			</div>
 		</div>
-		<div v-if="!isSmallScreen" class="skill-view">
+		<div v-else class="skill-view">
 			<div class="segment" v-for="segment in filteredSkillSegments" :key="segment">
 				<div class="skill" v-for="s in segment" :key="s.name">
 					<star-rating :rating="s.level" />
