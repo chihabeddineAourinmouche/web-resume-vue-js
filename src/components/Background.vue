@@ -17,7 +17,7 @@
 	// UTILS
 	import { generateSizesPositions, randomInt } from '../utils/random'
 	import { calculateSubsetRatio } from '../utils/calculations'
-	import { getWindowInnerWidth } from '@/utils/dom'
+	import { getWindowInnerWidth, watchHorizontalResize } from '@/utils/dom'
 
 	// STORE
 	import { useThemeStore } from "../store/theme"
@@ -61,21 +61,13 @@
 	}
 	const onHorizontalResize = () => updateParticles()
 	const init = () => generateParticles()
-	const watchResize = () => {
-		let previousWidth = getWindowInnerWidth()
-		window.addEventListener('resize', () => {
-			const currentWidth = getWindowInnerWidth()
-			const widthDifference = currentWidth - previousWidth
-			if (widthDifference !== 0 && !(currentWidth < MIN_WIDTH && previousWidth < MIN_WIDTH)) {
-				onHorizontalResize()
-			}
-			previousWidth = currentWidth
-		})
-	}
 
-	onBeforeMount(init)
+	// LIFECYCLE HOOKS
+	onBeforeMount(() => {
+		init()
+		watchHorizontalResize(onHorizontalResize, MIN_WIDTH)
+	})
 	onBeforeUpdate(updateParticles)
-	watchResize()
 </script>
 
 <style scoped>

@@ -14,20 +14,35 @@
 			>{{ category }}</span>
 			<i v-if="selectedCategories.length" id="filter-clear" class="fa-solid fa-xmark" @click="clearFilter" />
 		</div>
-		<div class="skill" v-for="s in filteredSkills" :key="s.name">
-			<star-rating :rating="s.level" />
-			<span class="skill-name">{{ s.name }}</span>
-			<span class="skill-category">( {{ s.category }} )</span>
+		<div v-if="isSmallScreen" class="skill-view" id="skill-view-small-screen">
+			<div class="skill" v-for="s in filteredSkills" :key="s.name">
+				<star-rating :rating="s.level" />
+				<span class="skill-name">{{ s.name }}</span>
+			</div>
+		</div>
+		<div v-if="!isSmallScreen" class="skill-view">
+			<div class="segment" v-for="segment in filteredSkillSegments" :key="segment">
+				<div class="skill" v-for="s in segment" :key="s.name">
+					<star-rating :rating="s.level" />
+					<span class="skill-name">{{ s.name }}</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+	// CONSTS
+	const MIN_WIDTH = 460
+
 	// COMPONENTS
 	import StarRating from './StarRating.vue'
 
 	// VUE
-	import { ref, computed } from 'vue'
+	import { ref, computed, onBeforeMount } from 'vue'
+
+	// UTILS
+	import { getWindowInnerWidth, watchHorizontalResize } from '../utils/dom'
 
 	// STORE
 	import { useThemeStore } from "../store/theme"
@@ -38,6 +53,7 @@
 	// REF
 	const filterHint = ref('Filter by category')
 	const selectedCategories = ref([])
+	const isSmallScreenRef = ref(getWindowInnerWidth() <= MIN_WIDTH)
 
 	// PROPS
 	const props = defineProps({
@@ -45,16 +61,29 @@
 	})
 
 	// COMPUTED
+	const isSmallScreen = computed(() => isSmallScreenRef.value)
 	const theme = computed(themeStore.getTheme)
 	const skillsSortedBylevelDesc = computed(() => props.skills.sort((a, b) => b.level - a.level))
-	const filteredSkills = computed(() => skillsSortedBylevelDesc.value.filter(skill => selectedCategories.value.includes(skill.category) || selectedCategories.value.length === 0))
 	const skillCategorySet = computed(() => new Set(props.skills.map(skill => skill.category)))
+	const filteredSkills = computed(() => skillsSortedBylevelDesc.value.filter(skill => selectedCategories.value.includes(skill.category) || selectedCategories.value.length === 0))
+	const filteredSkillSegments = computed(() => {
+		const localFilteredSkills = [...filteredSkills.value]
+		const segmentLength = 6
+		const nbSegments = Math.ceil(localFilteredSkills.length / segmentLength)
+		const segments = []
+		for (let i = 0; i < nbSegments; i ++) { segments.push(localFilteredSkills.splice(0, segmentLength)) }
+		return segments
+	})
 
 	// METHODS
 	const categorySelected = (category) => selectedCategories.value.includes(category)
 	const clearFilter = () => selectedCategories.value = []
 	const selectCategory = (category) => selectedCategories.value.push(category)
 	const unSelectCategory = (category) => selectedCategories.value = selectedCategories.value.filter(c => c !== category)
+	const onHorizontalResize = () => { isSmallScreenRef.value = getWindowInnerWidth() <= MIN_WIDTH }
+	
+	// LIFECYCLE HOOKS
+	onBeforeMount(() => watchHorizontalResize(onHorizontalResize, MIN_WIDTH))
 </script>
 
 <style scoped>
@@ -68,8 +97,19 @@
 		  flex-direction: column;
 		  justify-content: center;
 		  gap: 5px;
-		  padding: 10px;
+		  /* padding: 10px; */
 		  text-decoration: none;
+	}
+	.skill-view {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+		padding: 30px;
+	}
+	#skill-view-small-screen {
+		  flex-direction: column;
+		  justify-content: center;
+		  gap: 5px;
 	}
 	.skill {
 		display: flex;
