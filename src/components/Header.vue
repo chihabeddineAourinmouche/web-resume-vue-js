@@ -18,13 +18,13 @@
 		align-items: center;
 		gap: 30px;
 	}
-	@media screen and (max-width: 460px) {
+	@media screen and (max-width: 500px) {
 		#resume-header {
 			border-radius: 15px;
 			flex-direction: column;
 		}
 	}
-	@media screen and (min-width: 461px) {
+	@media screen and (min-width: 500px) {
 		#resume-header {
 			border-radius: 100px 15px 15px 100px;
 			flex-direction: row;
