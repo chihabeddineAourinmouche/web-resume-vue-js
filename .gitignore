@@ -47,3 +47,5 @@ yarn.lock
 
 # OS SPECIFIC
 .DS_Store
+.env
+

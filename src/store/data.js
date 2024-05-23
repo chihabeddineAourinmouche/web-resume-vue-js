@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
+const JSON_BIN_API_URL = import.meta.env.VITE_JSON_BIN_API_URL
+const X_MASTER_KEY = import.meta.env.VITE_JSON_BIN_X_MASTER_KEY
+
 export const useDataStore = defineStore('data', () => {
 	return {
 		data: null,
@@ -13,9 +16,9 @@ export const useDataStore = defineStore('data', () => {
 		// Actions
 		async fetchData() {
 			try {
-				const response = await axios.get('https://api.jsonbin.io/v3/b/664e631ce41b4d34e4f7e30a', {
+				const response = await axios.get(JSON_BIN_API_URL, {
 					headers: {
-						'x-master-key': 'PUT KEY HERE',
+						'x-master-key': X_MASTER_KEY,
 					},
 				})
 				this.data = response.data.record
