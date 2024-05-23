@@ -37,7 +37,7 @@
 
 	// REF
 	const filterHint = ref('Filter by category')
-	const selectedCategories = ref(['Method'])
+	const selectedCategories = ref([])
 
 	// PROPS
 	const props = defineProps({
