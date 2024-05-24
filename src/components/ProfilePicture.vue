@@ -2,7 +2,7 @@
 	<article>
 		<img
 			:style="{ borderColor: theme.secondaryColor }"
-			:src="profilePictureSrc"
+			:src="profilePicture"
 			alt="profile picture"
 		/>
 	</article>
@@ -19,13 +19,12 @@
 	const themeStore = useThemeStore()
 
 	// PROPS
-	const props = defineProps({
+	defineProps({
 		profilePicture: { type: String },
 	})
 
 	// COMPUTED
 	const theme = computed(themeStore.getTheme)
-	const profilePictureSrc = computed(() => `${new URL('@/assets', import.meta.url).href}/${props.profilePicture}`)// TODO - REMOVE WHEN LINKS COMES READY FROM BACKEND
 </script>
 
 <style scoped>
