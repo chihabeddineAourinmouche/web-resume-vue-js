@@ -1,34 +1,39 @@
 <template>
-	<div id="skills">
-		<div id="filter">
-			<p id="filter-hint">{{ filterHint }}</p>
-			<span
-				class="filter-criteria"
-				v-for="category in skillCategorySet" :key="category"
-				:style="{
-					backgroundColor: categorySelected(category) ? theme.secondaryColor : theme.tertiaryColor,
-					color: theme.tertiaryColorContrast,
-					fontWeight: categorySelected(category) ? 'bolder' : 'normal'
-				}"
-				@click="categorySelected(category) ? unSelectCategory(category) : selectCategory(category)"
-			>{{ category }}</span>
-			<i v-if="selectedCategories.length" id="filter-clear" class="fa-solid fa-xmark" @click="clearFilter" />
-		</div>
-		<div v-if="isSmallScreen" class="skill-view" id="skill-view-small-screen">
-			<div class="skill" v-for="s in filteredSkills" :key="s.name">
-				<star-rating :rating="s.level" />
-				<span class="skill-name">{{ s.name }}</span>
-			</div>
-		</div>
-		<div v-else class="skill-view">
-			<div class="segment" v-for="segment in filteredSkillSegments" :key="segment">
-				<div class="skill" v-for="s in segment" :key="s.name">
+	<section>
+		<section-title  :title="sectionTitle" />
+		<article>
+			<h3>{{ filterHint }}</h3>
+			<ul id="filter">
+				<li
+					class="filter-criteria"
+					v-for="category in skillCategorySet" :key="category"
+					:style="{
+						backgroundColor: categorySelected(category) ? theme.secondaryColor : theme.tertiaryColor,
+						color: theme.tertiaryColorContrast,
+						fontWeight: categorySelected(category) ? 'bolder' : 'normal'
+					}"
+					@click="categorySelected(category) ? unSelectCategory(category) : selectCategory(category)"
+				>{{ category }}</li>
+				<i v-if="selectedCategories.length" id="filter-clear" class="fa-solid fa-xmark" @click="clearFilter" />
+			</ul>
+			<ul v-if="isSmallScreen" class="skill-view" id="skill-view-small-screen">
+				<li class="skill" v-for="s in filteredSkills" :key="s.name">
 					<star-rating :rating="s.level" />
 					<span class="skill-name">{{ s.name }}</span>
-				</div>
-			</div>
-		</div>
-	</div>
+				</li>
+			</ul>
+			<ul v-else class="skill-view">
+				<li class="segment" v-for="segment in filteredSkillSegments" :key="segment">
+					<ul class="segment-skills">
+						<li class="skill" v-for="s in segment" :key="s.name">
+							<star-rating :rating="s.level" />
+							<span class="skill-name">{{ s.name }}</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</article>
+	</section>
 </template>
 
 <script setup>
@@ -36,16 +41,17 @@
 	const MIN_WIDTH = 460
 
 	// COMPONENTS
-	import StarRating from './StarRating.vue'
+	import StarRating from '@/components/StarRating.vue'
+	import SectionTitle from '@/components/SectionTitle.vue'
 
 	// VUE
 	import { ref, computed, onBeforeMount } from 'vue'
 
 	// UTILS
-	import { getWindowInnerWidth, watchHorizontalResize } from '../utils/dom'
+	import { getWindowInnerWidth, watchHorizontalResize } from '@/utils/dom'
 
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
@@ -61,6 +67,7 @@
 	})
 
 	// COMPUTED
+	const sectionTitle = computed(() => 'Skills')
 	const isSmallScreen = computed(() => isSmallScreenRef.value)
 	const theme = computed(themeStore.getTheme)
 	const skillsSortedBylevelDesc = computed(() => props.skills.sort((a, b) => b.level - a.level))
@@ -87,7 +94,15 @@
 </script>
 
 <style scoped>
-	#skills {
+	section {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
+	article {
 		  background-color: #fff;
 		  max-width: 700px;
 		  width: 100%;
@@ -96,15 +111,14 @@
 		  display: flex;
 		  flex-direction: column;
 		  justify-content: center;
-		  gap: 5px;
-		  /* padding: 10px; */
+		  gap: 20px;
+		  padding: 30px;
 		  text-decoration: none;
 	}
 	.skill-view {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 15px;
-		padding: 30px;
 	}
 	#skill-view-small-screen {
 		  flex-direction: column;
@@ -121,32 +135,16 @@
 		text-align: left;
 		font-weight: bold;
 	}
-	.skill-category {
-		text-align: left;
-		font-size: .7em;
-	}
 	#filter {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 5px;
-		font-size: .6em;
+		font-size: .7em;
 	}
-	@media screen and (max-width: 350px) {
-		#filter {
-			padding: 20px;
-		}
-	}
-	@media screen and (min-width: 350px) {
-		#filter {
-			padding: 20px 5%;
-		}
-	}
-	#filter-hint {
-		width: 100%;
-		height: 30px;
+	h3 {
 		opacity: .3;
-		font-size: 1.5em;
+		font-size: 1em;
 	}
 	.filter-criteria {
 		padding: 2px 5px;

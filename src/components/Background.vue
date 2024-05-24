@@ -15,12 +15,12 @@
 	import { computed, onBeforeMount, onBeforeUpdate, onUpdated, ref } from 'vue'
 
 	// UTILS
-	import { generateSizesPositions, randomInt } from '../utils/random'
-	import { calculateSubsetRatio } from '../utils/calculations'
+	import { generateSizesPositions, randomInt } from '@/utils/random'
+	import { calculateSubsetRatio } from '@/utils/calculations'
 	import { getWindowInnerWidth, watchHorizontalResize } from '@/utils/dom'
 
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()

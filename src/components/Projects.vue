@@ -1,36 +1,44 @@
 <template>
-	<div id="projects">
-		<div class="search-container">
-			<i class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
-			<input
-				class="search-input"
-				type="text"
-				:placeholder="`ex. ${placeholderSkills}`"
-				v-model="searchString"
-				:style="{ borderBottomColor: theme.tertiaryColor }"
-			/>
-		</div>
-		<div v-for="project in projectsFilteredBySkills" :key="project.id" class="project">
-			<h3 class="project-title">{{ project.name }}</h3>
-			<p class="project-description">{{ project.description }}</p>
-			<div class="project-skills">
-				<span
-					v-for="skill in project.skills"
-					:key="skill"
-					class="project-skill"
-					:style="{ backgroundColor: theme.tertiaryColor, color: theme.tertiaryColorContrast }"
-				>{{ skill }}</span>
-			</div>
-		</div>
-	</div>
+	<section>
+		<section-title :title="sectionTitle" />
+		<article>
+			<label for="project-search-input">
+				<span class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
+				<input
+					id="project-search-input"
+					type="text"
+					:placeholder="`ex. ${placeholderSkills}`"
+					v-model="searchString"
+					:style="{ borderBottomColor: theme.tertiaryColor }"
+				/>
+			</label>
+			<ul id="project-list">
+				<li v-for="project in projectsFilteredBySkills" :key="project.id" class="project">
+					<h3>{{ project.name }}</h3>
+					<p>{{ project.description }}</p>
+					<ul class="project-skill-list">
+						<li v-for="skill in project.skills" :key="skill">
+							<span
+								class="project-skill"
+								:style="{ backgroundColor: theme.tertiaryColor, color: theme.tertiaryColorContrast }"
+							>{{ skill }}</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</article>
+	</section>
 </template>
 
 <script setup>
+	// COMPONENTS
+	import SectionTitle from '@/components/SectionTitle.vue'
+	
 	// VUE
 	import { ref, computed } from 'vue'
 
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
@@ -44,6 +52,7 @@
 	})
 
 	// COMPUTED
+	const sectionTitle = computed(() => 'Projects')
 	const theme = computed(themeStore.getTheme)
 	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
 		if (searchString.value === '' || searchString.value.replaceAll(' ', '') === '') {
@@ -75,7 +84,15 @@
 </script>
 
 <style scoped>
-	#projects {
+	section {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
+	article {
 	  background-color: #fff;
 	  max-width: 700px;
 	  width: 100%;
@@ -87,17 +104,16 @@
 	  gap: 20px;
 	}
 	@media (max-width: 350px) {
-		#projects {
+		article {
 			padding: 20px 20px;
 		}
 	}
-
 	@media (min-width: 350px) {
-		#projects {
+		article {
 			padding: 20px 5%;
 		}
 	}
-	.search-container {
+	label {
 		position: relative;
 		display: flex;
 		align-items: center;
@@ -107,7 +123,7 @@
 		position: absolute;
 		left: 10px;
 	}
-	.search-input {
+	input {
 		outline: none;
 		border: none;
 		border-bottom-width: 2px;
@@ -117,18 +133,18 @@
 		padding: 5px 5px 5px 35px;
 		cursor: text;
 	}
-	.project {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		list-style-type: none;
+	#project-list {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  gap: 20px;
 	}
 	p {
 		font-size: .8em;
 		color: #555;
 		text-align: justify;
 	}
-	.project-skills {
+	.project-skill-list {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;

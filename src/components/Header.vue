@@ -1,13 +1,13 @@
 <template>
-	<div id="resume-header">
+	<section>
 		<slot />
-	</div>
+	</section>
 </template>
 
 <script setup></script>
 
 <style scoped>
-	#resume-header {
+	section {
 		background-color: #fff;
 		width: 100%;
 		max-width: 700px;
@@ -19,13 +19,13 @@
 		gap: 30px;
 	}
 	@media screen and (max-width: 500px) {
-		#resume-header {
+		section {
 			border-radius: 15px;
 			flex-direction: column;
 		}
 	}
 	@media screen and (min-width: 500px) {
-		#resume-header {
+		section {
 			border-radius: 100px 15px 15px 100px;
 			flex-direction: row;
 		}

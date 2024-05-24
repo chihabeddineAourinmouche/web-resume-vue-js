@@ -1,29 +1,40 @@
 <template>
-	<div id="contact-languages">
+	<section>
+		<section-title  :title="sectionTitle" />
 		<slot />
-	</div>
+	</section>
 </template>
 
-<script setup />
+<script setup>
+	// COMPONENTS
+	import SectionTitle from '@/components/SectionTitle.vue';
+	
+	// VUE
+	import { computed } from 'vue';
+	
+	// COMPUTED
+	const sectionTitle = computed(() => 'Contact & Languages')
+</script>
 
 <style scoped>
-	#contact-languages {
+	section {
 		max-width: 700px;
 		width: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		gap: 20px;
 		justify-content: space-around;
 	}
 	
 	@media (max-width: 490px) {
-		#contact-languages {
+		section {
 			flex-direction: column;
 			align-items: flex-end;
 		}
 	}
 	
 	@media (min-width: 490px) {
-		#contact-languages {
+		section {
 			flex-direction: row;
 			align-items: flex-start;
 		}

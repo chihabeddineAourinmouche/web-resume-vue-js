@@ -14,7 +14,7 @@ export default defineConfig({
   base: ['', REPO_NAME][0],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     }
   },
 })

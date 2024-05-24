@@ -1,20 +1,22 @@
 <template>
-	<div id="contact">
-		<div class="contact-address">
-			<i class="fa-solid fa-location-dot" />
-			<a
-				target="_blank"
-				:href="`https://www.google.com/maps/place/${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}`"
-			>{{ `${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}` }}</a>
-		</div>
-		<div class="contact-email">
-			<i class="fa-regular fa-envelope" />
-			<a
-				target="_blank"
-				:href="`mailto:${emailAddress}`"
-			>{{ emailAddress }}</a>
-		</div>
-	</div>
+	<article>
+		<a
+			target="_blank"
+			:href="`https://www.google.com/maps/place/${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}`"
+		>
+			<i class="fa-solid fa-location-dot"></i>
+			<span>
+				{{ `${!['', undefined, null].includes(address.street) ? address.street + ' - ' : ''}${address.city} ${address.postal_code}, ${address.state}, ${address.country}` }}
+			</span>
+		</a>
+		<a
+			target="_blank"
+			:href="`mailto:${emailAddress}`"
+		>
+			<i class="fa-regular fa-envelope"></i>
+			<span>{{ emailAddress }}</span>
+		</a>
+	</article>
 </template>
 
 <script setup>
@@ -26,7 +28,7 @@
 </script>
 
 <style scoped>
-	#contact {
+	article {
 		  background-color: #fff;
 		  border-radius: 15px;
 		  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -36,23 +38,19 @@
 		  padding: 10px;
 		  max-width: 300px;
 	}
-	.contact-address {
-		display: flex;
-		gap: 10px;
-		user-select: text;
-	}
-	.contact-email {
-		display: flex;
-		gap: 10px;
-		user-select: text;
-	}
-	i {
-		display: flex;
-		align-items: center;
-	}
 	a {
+		display: flex;
+		gap: 10px;
+		user-select: text;
+		align-items: center;
 		color: inherit;
-		user-select: inherit;
+		text-decoration: none;
+	}
+	i,
+	span {
 		cursor: pointer;
+	}
+	span {
+		text-decoration: underline solid #ccc 1px;
 	}
 </style>

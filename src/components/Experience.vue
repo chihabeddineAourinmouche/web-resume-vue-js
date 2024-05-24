@@ -1,46 +1,66 @@
 <template>
-	<div id="experience">
-		<div v-for="experienceUnit in experienceUnits" :key="experienceUnit.id" class="experience-unit">
-			<h3 class="experience-unit-title">{{ `${experienceUnit.startYear}-${experienceUnit.endYear}, ${experienceUnit.jobTitle} @ ${experienceUnit.company}` }}</h3>
-			<p class="experience-unit-description">{{ experienceUnit.description }}</p>
-		</div>
-	</div>
+	<section>
+		<section-title :title="sectionTitle" />
+		<article>
+			<ul>
+				<li v-for="experienceUnit in experienceUnits" :key="experienceUnit.id">
+					<h3>{{ `${experienceUnit.startYear}-${experienceUnit.endYear}, ${experienceUnit.jobTitle} @ ${experienceUnit.company}` }}</h3>
+					<p>{{ experienceUnit.description }}</p>
+				</li>
+			</ul>
+		</article>
+	</section>
 </template>
 
 <script setup>
+	// COMPONENTS
+	import SectionTitle from '@/components/SectionTitle.vue'
+
+	// VUE
+	import { computed } from 'vue'
+	
 	// PROPS
 	defineProps({
 		experienceUnits: { type: Array }
 	})
+
+	// COMPUTED
+	const sectionTitle = computed(() => 'Professional Experience')
 </script>
 
 <style scoped>
-	#experience {
-	  background-color: #fff;
-	  max-width: 700px;
-	  width: 100%;
-	  border-radius: 15px;
-	  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: space-between;
-	  gap: 20px;
+	section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
 	}
-	@media (max-width: 350px) {
-	  #experience {
-		  padding: 20px 20px;
-	  }
-	}
-	@media (min-width: 350px) {
-	  #experience {
-		  padding: 20px 5%;
-	  }
-	}
-	.experience-unit {
+	ul {
+		background-color: #fff;
+		max-width: 700px;
+		width: 100%;
+		border-radius: 15px;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		list-style-type: none;
+		gap: 20px;
+	}
+	@media (max-width: 350px) {
+		ul {
+			padding: 20px 20px;
+		}
+	}
+	@media (min-width: 350px) {
+		ul {
+			padding: 20px 5%;
+		}
+	}
+	li {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 	p {
 		font-size: .8em;

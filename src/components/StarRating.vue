@@ -1,7 +1,9 @@
 <template>
-	<span class="star-rating" :style="{ color: color }">
-		<i v-for="(star, index) in stars" :key="`star-${index}`" :class="star.cls" :style="{ opacity: star.empty ? .3 : 1 }" />
-	</span>
+	<ul :style="{ color: color }">
+		<li v-for="(star, index) in stars" :key="`star-${index}`">
+			<i :class="star.cls" :style="{ opacity: star.empty ? .3 : 1 }" />
+		</li>
+	</ul>
 </template>
 
 <script setup>
@@ -33,20 +35,11 @@
 </script>
 
 <style scoped>
-	.star-rating {
+	ul {
 		font-weight: bold;
 		text-align: right;
 		display: flex;
 		align-items: center;
-	}
-	@media (max-width: 490px) {
-		.star-rating {
-			font-size: .6em;
-		}
-	}
-	@media (min-width: 490px) {
-		.star-rating {
-			font-size: .8em;
-		}
+		font-size: .8em;
 	}
 </style>

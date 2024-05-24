@@ -1,13 +1,13 @@
 <template>
-	<a
-		:id="id"
-		class="section-title"
-		:href="`#${id}`"
-		:style="{
-			textAlign: alignment < 1 ? 'left' : alignment < 2 ? 'center' : 'right',
-			color: theme.secondaryColor
-		}"
-	>{{ title }}</a>
+	<header :style="{ justifyContent: alignment }">
+		<h2>
+			<a
+				:id="id"
+				:href="`#${id}`"
+				:style="{ color: theme.secondaryColor }"
+			>{{ title }}</a>
+		</h2>
+	</header>
 </template>
 
 <script setup>
@@ -15,10 +15,10 @@
 	import { computed } from 'vue'
 
 	// UTILS
-	import { randomInt } from '../utils/random.js'
+	import { randomInt } from '@/utils/random.js'
 
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
@@ -30,24 +30,30 @@
 
 	// COMPUTED
 	const theme = computed(themeStore.getTheme)
-	const alignment = computed(() => randomInt(0, 3))
+	const alignment = computed(() => {
+		const r = randomInt(0, 3)
+		return r < 1 ? 'flex-start' : r < 2 ? 'center' : 'flex-end'
+	})
 	const id = computed(() => `section-title-${props.title.toLowerCase()}`)
 </script>
 
 <style scoped>
-	.section-title {
-		max-width: 700px;
+	header {
+		flex-basis: 100%;
 		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+	a {
+		max-width: 700px;
 		margin-top: 20px;
 		padding: 0px 50px;
 		outline: none;
-		font-size: 1.3em;
 		cursor: pointer;
 		text-decoration: none;
-		font-family: Verdana, sans-serif;
 	}
 
-	.section-title:hover {
+	a:hover {
 		text-decoration: underline;
 	}
 </style>

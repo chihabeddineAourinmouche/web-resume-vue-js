@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getItem, setItem } from '../utils/localStorage'
+import { getItem, setItem } from '@/utils/localStorage'
 
 const KEY_NAME = 'uiLanguage'
 

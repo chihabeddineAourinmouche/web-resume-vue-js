@@ -3,7 +3,7 @@ import './assets/main.css'
 
 // VUE
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from '@/App.vue'
 
 // PINIA
 import { createPinia } from 'pinia'

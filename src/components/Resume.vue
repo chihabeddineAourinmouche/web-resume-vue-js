@@ -1,10 +1,40 @@
 <template>
   <div id="resume-container">
-    <slot />
+    <Header>
+      <profile-picture :profilePicture="data.image" draggable="false" />
+      <name-and-title :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
+    </Header>
+    <about :about="data.about" />
+    <skills :skills="data.skills" />
+    <contact-and-languages>
+      <contact :address="data.address" :emailAddress="data.emailAddress" />
+      <languages :languages="data.languages" />
+    </contact-and-languages>
+    <education :educationUnits="data.educationUnits" />
+    <experience :experienceUnits="data.experienceUnits" />
+    <projects v-if="data.projects.length" :projects="data.projects" />
   </div>
 </template>
 
-<script setup />
+<script setup>
+  // COMPONENTS
+  import Header from '@/components/Header.vue'
+  import ProfilePicture from '@/components/ProfilePicture.vue'
+  import NameAndTitle from '@/components/NameAndTitle.vue'
+  import About from '@/components/About.vue'
+  import Skills from '@/components/Skills.vue'
+  import ContactAndLanguages from '@/components/ContactAndLanguages.vue'
+  import Languages from '@/components/Languages.vue'
+  import Contact from '@/components/Contact.vue'
+  import Education from '@/components/Education.vue'
+  import Experience from '@/components/Experience.vue'
+  import Projects from '@/components/Projects.vue'
+
+  // PROPS
+  defineProps({
+    data: { type: Object }
+  })
+</script>
 
 <style scoped>
   #resume-container {

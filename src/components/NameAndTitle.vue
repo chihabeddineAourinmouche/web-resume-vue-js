@@ -1,8 +1,8 @@
 <template>
-	<div id="name-and-title">
-		<h2 id="name" :style="{ color: theme.secondaryColor }">{{ name }}</h2>
-		<p id="title">{{ title }}</p>
-	</div>
+	<header>
+		<h2 :style="{ color: theme.secondaryColor }">{{ name }}</h2>
+		<h3>{{ title }}</h3>
+	</header>
 </template>
 
 <script setup>
@@ -26,7 +26,7 @@
 </script>
 
 <style scoped>
-	#name-and-title {
+	header {
 		padding-top: 20px;
 		display: flex;
 		flex-direction: column;
@@ -34,7 +34,7 @@
 		flex-grow: 1;
 		text-align: left;
 	}
-	#name {
+	h2 {
 		font-size: 1.7em;
 		font-weight: 500;
 	}

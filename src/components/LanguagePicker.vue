@@ -1,10 +1,9 @@
 <template>
-	<div id="language-picker">
+	<article id="language-picker">
 		<p id="message">{{ message }}</p>
-		<div id="buttons">
-			<div
+		<ul>
+			<li
 				v-for="(language, index) in languages" :key="language"
-				class="language-button"
 				@click="pickLanguage(language)"
 			>
 				<span class="language-name" :style="{ color: index === 0 ? '#888' : '#aaa' }">
@@ -15,26 +14,26 @@
 					id="counter"
 					:style="{ color: theme.tertiaryColor }"
 				>{{ counter }}</span>
-			</div>
-		</div>
-	</div>
+			</li>
+		</ul>
+	</article>
 </template>
 
 <script setup>
-	const TARGET_TIME = 10
+	const TARGET_TIME = 1000
 	const DEFAULT_LANGUAGE = 'en'
 
 	// VUE
 	import { computed, onBeforeMount, ref } from 'vue'
 
 	// STORE
-	import { useThemeStore } from '../store/theme'
+	import { useThemeStore } from '@/store/theme'
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
 
 	// UTILS
-	import { countDown } from '../utils/time'
+	import { countDown } from '@/utils/time'
 	
 	// EMITS
 	const emit = defineEmits([ 'pick' ])
@@ -73,45 +72,55 @@
 	defineExpose({ cancelPicking })
 </script>
 
-<style>
-	#language-picker {
+<style scoped>
+	article {
 		background: inherit;
 		background-color: #fff;
 		width: 100%;
 		max-width: 350px;
-		overflow-y: auto;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-evenly;
+		align-items: center;
+		gap: 5px;
+	}
+	ul {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
 		align-items: center;
 		gap: 10px;
+		padding: 50px 0;
+		overflow-y: auto;
 	}
-	.language-button {
+	li {
 		background-color: #fafafa;
 		width: 100%;
 		max-width: 150px;
 		min-width: 100px;
 		height: 50px;
 		border-radius: 15px;
+		padding: 10px;
 		cursor: pointer;
 		display: flex;
-		place-content: center;
-		place-items: center;
-		margin: 10px;
+		justify-content: space-between;
+		align-items: center;
 		color: #aaa;
 		font-weight: bold;
 		font-size: 1.2em;
-		position: relative;
 	}
-	.language-button:hover {
+	li:hover {
 		background-color: #efefef;
 	}
-	#message {
+	p {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 10px;
+		padding: 10px 50px;
+		text-align: justify;
 	}
 	.language-name {
 		cursor: inherit;
@@ -122,8 +131,6 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		position: absolute;
-		right: 10px;
 		cursor: inherit;
 	}
 </style>

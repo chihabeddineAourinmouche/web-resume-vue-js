@@ -1,10 +1,11 @@
 <template>
-	<img
-		id="profile-picture"
-		:style="{ borderColor: theme.secondaryColor }"
-		:src="profilePicture"
-		alt="profile picture"
-	/>
+	<article>
+		<img
+			:style="{ borderColor: theme.secondaryColor }"
+			:src="profilePictureSrc"
+			alt="profile picture"
+		/>
+	</article>
 </template>
 
 <script setup>
@@ -17,17 +18,18 @@
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
 
-	// COMPUTED
-	const theme = computed(themeStore.getTheme)
-
 	// PROPS
-	defineProps({
+	const props = defineProps({
 		profilePicture: { type: String },
 	})
+
+	// COMPUTED
+	const theme = computed(themeStore.getTheme)
+	const profilePictureSrc = computed(() => `${new URL('@/assets', import.meta.url).href}/${props.profilePicture}`)// TODO - REMOVE WHEN LINKS COMES READY FROM BACKEND
 </script>
 
 <style scoped>
-	#profile-picture {
+	img {
 		height: 150px;
 		width: 150px;
 		border-radius: 50%;

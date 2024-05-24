@@ -1,17 +1,17 @@
 <template>
-	<div v-if="isOpen" id="overlay" @click="close" @touchend="close">
-		<div id="modal" @click.stop @touchend.stop>
-			<i
-				id="close" class="fa-solid fa-xmark"
-				:style="{ color: theme.secondaryColor }"
-				@click="close"
-				@touchend="close"
-			/>
-			<div id="modal-content">
-				<slot />
-			</div>
-		</div>
-	</div>
+	<section v-if="isOpen" id="overlay" @click="close" @touchend="close">
+		<article @click.stop @touchend.stop>
+			<header>
+				<button @click="close" @touchend="close">
+					<span
+						id="close" class="fa-solid fa-xmark"
+						:style="{ color: theme.secondaryColor }"
+					/>
+				</button>
+			</header>
+			<slot />
+		</article>
+	</section>
 </template>
 
 <script setup>
@@ -76,28 +76,32 @@
 		justify-content: center;
 		align-items: center;
 	}
-	#modal {
+	article {
 		background-color: #fff;
 		width: 350px;
-		height: 350px;
-		padding: 30px 0;
-		text-align: justify;
+		height: 350px;/* WHEN MOBILE DEVICE IS IN LANDSCAPE MODE, THE MODAL SHOULD REMAIN FULLY VISIBLE */
+		padding: 0 0 30px 0;
 		border-radius: 15px;
-		position: relative;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		justify-content: flex-start;
 		align-items: center;
+		overflow: hidden;
+	}
+	header {
+		width: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+	}
+	button {
+		all: unset;
+		border: none;
+		background: none;
 	}
 	#close {
-		position: absolute;
-		top: 10px;
-		right: 10px;
 		cursor: pointer;
-	}
-	#modal-content {
-		width: 100%;
-		max-height: 290px;
-		overflow-y: auto;
-		padding: 0 10px;
 	}
 </style>
