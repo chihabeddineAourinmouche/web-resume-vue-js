@@ -4,14 +4,20 @@
       <profile-picture :profilePicture="data.image" draggable="false" />
       <name-and-title :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
     </Header>
+    
     <about :about="data.about" />
+    
     <skills :skills="data.skills" />
+    
     <contact-and-languages :languages="data.languages">
       <contact :address="data.address" :emailAddress="data.emailAddress" />
       <languages :languages="data.languages" />
     </contact-and-languages>
+    
     <education :educationUnits="data.educationUnits" />
+    
     <experience :experienceUnits="data.experienceUnits" />
+    
     <projects v-if="data.projects.length" :projects="data.projects" />
   </div>
 </template>
@@ -45,7 +51,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 50px;
     width: 100%;
     max-width: 700px;
     min-width: 350px;

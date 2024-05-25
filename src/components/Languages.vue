@@ -2,7 +2,7 @@
 	<article v-if="languages.length">
 		<ul>
 			<li v-for="l in languages" :key="l.name">
-				<span :style="{ color: color(l.level) }">{{ l.levelName }}</span>
+				<span :style="{ color: color(l.level) }">{{ getLocaleFor(l.level) }}</span>
 				<span>{{ l.name }}</span>
 			</li>
 		</ul>
@@ -10,15 +10,41 @@
 </template>
 
 <script setup>
+	// VUE
+	import { computed } from 'vue'
+
+	// STORE
+	import { useUiLanguageStore } from '@/store/uiLanguage'
+
+	// STORE OBJECTS
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		0: { en: 'Beginner', es: 'Principiante', fr: 'Débutant' },
+		1: { en: 'Intermediate', es: 'Intermedio', fr: 'Intermédiaire' },
+		2: { en: 'Proficient', es: 'Avanzado', fr: 'Avancé' },
+		3: { en: 'Bilingual', es: 'Bilingüe', fr: 'Bilingue' },
+	}
+
 	// PROPS
 	defineProps({
 		languages: { type: Array }
 	})
 
+	// COMPUTED
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+
 	// METHODS
-	const color = (l) => {
-		const level = l.toLowerCase()
-		return level === 'beginner' ? '#bd3a3a' : level === 'intermediate' ? '#cc9670' : level === 'proficient' ? '#b5cc70' : '#70adcc'
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+	const color = (level) => {
+		return level === 0
+			? '#bd3a3a'
+			: level === 1
+				? '#cc9670'
+				: level === 2
+					? '#b5cc70'
+					: '#70adcc'
 	}
 </script>
 

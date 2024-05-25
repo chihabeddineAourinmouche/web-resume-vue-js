@@ -170,8 +170,7 @@ const response = {
 					  "es": "Árabe",
 					  "fr": "Arabe"
 					},
-					"level": "Bilingual",
-					"levelName": "Bilingual"
+					"level": 3,
 				  },
 				  {
 					"id": 2,
@@ -180,8 +179,7 @@ const response = {
 					  "es": "Inglés",
 					  "fr": "Anglais"
 					},
-					"level": "Bilingual",
-					"levelName": "Bilingual"
+					"level": 3,
 				  },
 				  {
 					"id": 3,
@@ -190,8 +188,7 @@ const response = {
 					  "es": "Francés",
 					  "fr": "Français"
 					},
-					"level": "Bilingual",
-					"levelName": "Bilingual"
+					"level": 3,
 				  },
 				  {
 					"id": 4,
@@ -200,8 +197,7 @@ const response = {
 					  "es": "Español",
 					  "fr": "Espagnol"
 					},
-					"level": "Beginner",
-					"levelName": "Beginner"
+					"level": 0,
 				  }
 				],
 				"projects": [
@@ -654,7 +650,7 @@ const response = {
 				"lastName": "AOURINMOUCHE",
 				"emailAddress": "chihab2007@gmail.com",
 				"image": ""
-			  },
+			},
 			"theme": {
 				"primaryColor": "#efefef",
 				"secondaryColor": "#b35949",
