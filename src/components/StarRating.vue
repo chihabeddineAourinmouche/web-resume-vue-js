@@ -12,19 +12,17 @@
 	
 	// PROPS
 	const props = defineProps({
-		rating: { type: String }
+		rating: { type: Number }
 	})
 	
 	// COMPUTED
 	const color = computed(() => {
-		const rating = parseFloat(props.rating)
-		return rating <= 1 ? '#bd3a3a' : rating <= 2 ? '#cc9670' : rating <= 3 ? '#b5cc70' : rating <= 4 ? '#78cc70' : '#70adcc'
+		return props.rating <= 1 ? '#bd3a3a' : props.rating <= 2 ? '#cc9670' : props.rating <= 3 ? '#b5cc70' : props.rating <= 4 ? '#78cc70' : '#70adcc'
 	})
 
 	const stars = computed(() => {
-		const rating = props.rating
-		const fullStars = Math.floor(rating)
-		const halfStar = rating % 1 === 0.5
+		const fullStars = Math.floor(props.rating)
+		const halfStar = props.rating % 1 === 0.5
 		const emptyStars = 5 - fullStars - (halfStar ? 1 : 0)
 		let stars = []
 		for (let i = 0; i < fullStars; i++) stars.push({ cls: 'fa-solid fa-star', empty: false })

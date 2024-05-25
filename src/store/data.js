@@ -333,7 +333,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 2,
@@ -343,7 +343,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 3,
@@ -353,7 +353,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 4,
@@ -363,7 +363,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 5,
@@ -373,7 +373,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 6,
@@ -383,7 +383,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 7,
@@ -393,7 +393,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 8,
@@ -403,7 +403,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 9,
@@ -413,7 +413,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 10,
@@ -423,7 +423,7 @@ const response = {
 					  "es": "Lenguaje de programación",
 					  "fr": "Langage de programmation"
 					},
-					"level": "4.0"
+					"level": 4
 				  },
 				  {
 					"id": 29,
@@ -433,7 +433,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "4.5"
+					"level": 4.5
 					},
 					{
 					"id": 30,
@@ -443,7 +443,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 11,
@@ -453,7 +453,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 12,
@@ -463,7 +463,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 13,
@@ -473,7 +473,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 14,
@@ -483,7 +483,7 @@ const response = {
 					"es": "Framework de prueba unitaria",
 					"fr": "Framework de test unitaire"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 15,
@@ -493,7 +493,7 @@ const response = {
 					"es": "Framework de pruebas BDD",
 					"fr": "Framework de test BDD"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 16,
@@ -503,7 +503,7 @@ const response = {
 					"es": "Lenguaje de consulta relacional",
 					"fr": "Langage de requêtes relationnelles"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 17,
@@ -513,7 +513,7 @@ const response = {
 					"es": "Lenguaje de consulta no relacional",
 					"fr": "Langage de requêtes non relationnelles"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 18,
@@ -523,7 +523,7 @@ const response = {
 					"es": "Arquitectura de software",
 					"fr": "Architecture logicielle"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 19,
@@ -533,7 +533,7 @@ const response = {
 					"es": "Método",
 					"fr": "Méthode"
 					},
-					"level": "4.0"
+					"level": 4
 					},
 					{
 					"id": 20,
@@ -543,7 +543,7 @@ const response = {
 					"es": "Framework web",
 					"fr": "Framework web"
 					},
-					"level": "2.5"
+					"level": 2.5
 					},
 					{
 					  "id": 21,
@@ -553,7 +553,7 @@ const response = {
 						"es": "Framework de Pruebas",
 						"fr": "Framework de Test"
 					  },
-					  "level": "2.5"
+					  "level": 2.5
 					},
 					{
 					  "id": 22,
@@ -563,7 +563,7 @@ const response = {
 						"es": "Herramienta",
 						"fr": "Outil"
 					  },
-					  "level": "2.0"
+					  "level": 2
 					},
 					{
 					  "id": 23,
@@ -573,7 +573,7 @@ const response = {
 						"es": "Lenguaje de Modelado",
 						"fr": "Langage de Modélisation"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					},
 					{
 					  "id": 24,
@@ -583,7 +583,7 @@ const response = {
 						"es": "Paradigma de Concepción de Software",
 						"fr": "Paradigme de Conception de Logiciel"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					},
 					{
 					  "id": 25,
@@ -593,7 +593,7 @@ const response = {
 						"es": "Patrones de Diseño de Software",
 						"fr": "Patrons de Conception Logicielle"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					},
 					{
 					  "id": 26,
@@ -603,7 +603,7 @@ const response = {
 						"es": "Método",
 						"fr": "Méthode"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					},
 					{
 					  "id": 27,
@@ -613,7 +613,7 @@ const response = {
 						"es": "Método",
 						"fr": "Méthode"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					},
 					{
 					  "id": 28,
@@ -623,7 +623,7 @@ const response = {
 						"es": "Lenguaje de Hojas de Estilo",
 						"fr": "Langage de Feuilles de Style"
 					  },
-					  "level": "4.5"
+					  "level": 4.5
 					}
 				],
 				"title": {
