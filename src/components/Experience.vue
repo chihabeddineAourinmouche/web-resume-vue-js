@@ -27,7 +27,7 @@
 
 	// LOCALE
 	const locale = {
-		experience: { en: 'Professional Experience', sp: 'Experiencia Profesional', fr: 'Experience Professionnelle' }
+		experience: { en: 'Professional Experience', es: 'Experiencia Profesional', fr: 'Experience Professionnelle' }
 	}							
 	
 	// PROPS

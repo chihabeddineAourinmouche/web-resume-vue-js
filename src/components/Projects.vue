@@ -1,5 +1,5 @@
 <template>
-	<section v-if="projectsFilteredBySkills.length">
+	<section v-if="projectsFilteredBySkills.length || searchString">
 		<section-title :title="sectionTitle" id="projects" />
 		<article>
 			<label for="project-search-input">
@@ -47,7 +47,7 @@
 
 	// LOCALE
 	const locale = {
-		projects: { en: 'Projects', sp: 'Proyectos', fr: 'Projets' }
+		projects: { en: 'Projects', es: 'Proyectos', fr: 'Projets' }
 	}
 
 	// REF

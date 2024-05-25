@@ -8,6 +8,11 @@
 						:style="{ color: theme.secondaryColor }"
 					/>
 				</button>
+				<span
+					v-if="icon"
+					:class="`${icon} fa-2x`"
+					:style="{ color: theme.secondaryColor }"
+				/>
 			</header>
 			<slot />
 		</article>
@@ -28,7 +33,7 @@
 	import { ref, computed } from 'vue'
 	
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 	import { setBodyStyle } from '@/utils/dom'
 	
 	// STORE OBJECTS
@@ -39,6 +44,11 @@
 
 	// EMITS
 	const emit = defineEmits([ 'onSelfClose' ])
+
+	// PROPS
+	defineProps({
+		icon: { type: String, default: null },
+	})
 	
 	// COMPUTED
 	const theme = computed(themeStore.getTheme)
@@ -93,7 +103,8 @@
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: space-between;
-		align-items: center;
+		/* align-items: center; */
+		align-items: flex-start;
 		padding: 10px;
 	}
 	button {

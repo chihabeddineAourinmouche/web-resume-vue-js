@@ -1,6 +1,6 @@
 <template>
   <div id="resume-container">
-    <Header>
+    <Header @onDataLanguageButtonClick="$emit('onDataLanguageButtonClick')">
       <profile-picture :profilePicture="data.image" draggable="false" />
       <name-and-title :name="`${data.firstName} ${data.lastName}`" :title="data.title" />
     </Header>
@@ -29,6 +29,9 @@
   import Education from '@/components/Education.vue'
   import Experience from '@/components/Experience.vue'
   import Projects from '@/components/Projects.vue'
+
+  // EMITS
+  defineEmits(['onDataLanguageButtonClick'])
 
   // PROPS
   defineProps({

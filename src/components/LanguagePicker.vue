@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-	const TARGET_TIME = 3
+	const WAITING_TIME = 10
 
 	// VUE
 	import { computed, onBeforeMount, ref } from 'vue'
@@ -38,13 +38,13 @@
 	const emit = defineEmits([ 'pick' ])
 
 	// REF
-	const counterValue = ref(TARGET_TIME)
-	const message = ref("Pick a language you would like to view the UI in (Default is English)")
+	const counterValue = ref(WAITING_TIME)
 	const countDownId = ref() // NECESSARY TO ALLOW INTERRUPTING THE COUNTDOWN
 	
 	// PROPS
 	defineProps({
 		languages: { type: Array },
+		message: { type: String, default: 'Pick a language' },
 	})
 
 	// COMPUTED
@@ -61,7 +61,7 @@
 	// LIFECYCLE HOOKS
 	onBeforeMount(() => {
 		countDownId.value = countDown(
-			TARGET_TIME,
+			WAITING_TIME,
 			() => { counterValue.value-- },
 			() => { pickLanguage() }
 		)

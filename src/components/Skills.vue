@@ -60,10 +60,10 @@
 
 	// LOCALE
 	const locale = {
-		skills: { en: 'Skills', sp: 'Habilidades', fr: 'Compétences' },
+		skills: { en: 'Skills', es: 'Habilidades', fr: 'Compétences' },
 		filterhinttext: {
 			en: "Filter by category",
-			sp: "Filtrar por categoría",
+			es: "Filtrar por categoría",
 			fr: "Filtrer par catégorie"
 		}
 	}

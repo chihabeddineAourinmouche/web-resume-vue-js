@@ -27,7 +27,7 @@
 
 	// LOCALE
 	const locale = {
-		education: { en: 'Education', sp: 'Educación', fr: 'Formation' }
+		education: { en: 'Education', es: 'Educación', fr: 'Formation' }
 	}
 
 	// PROPS

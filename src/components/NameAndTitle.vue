@@ -10,7 +10,7 @@
 	import { computed } from 'vue'
 
 	// STORE
-	import { useThemeStore } from "../store/theme"
+	import { useThemeStore } from "@/store/theme"
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()

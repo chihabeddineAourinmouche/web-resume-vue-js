@@ -20,8 +20,8 @@
 
 	// LOCALE
 	const locale = {
-		contact: { en: 'Contact', sp: 'Contacto', fr: 'Contact' },
-		languages: { en: 'Languages', sp: 'Idiomas', fr: 'Langues' },
+		contact: { en: 'Contact', es: 'Contacto', fr: 'Contact' },
+		languages: { en: 'Languages', es: 'Idiomas', fr: 'Langues' },
 	}
 
 	// PROPS

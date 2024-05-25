@@ -8,7 +8,7 @@ const getUiLanguage = () => getItem(KEY_NAME)
 export const useUiLanguageStore = defineStore('uiLanguage', () => {
 	return {
 		defaultUiLanguage: { code: 'en', name: 'English' },
-		uiLanguages: [{code: 'en', name: 'English'}, {code: 'sp', name: 'Spanish'}, {code: 'fr', name: 'French'}],
+		uiLanguages: [{code: 'en', name: 'English'}, {code: 'es', name: 'Spanish'}, {code: 'fr', name: 'French'}],
 		uiLanguage: null,
 
 		// GETTERS

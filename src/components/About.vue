@@ -22,7 +22,7 @@
 
 	// LOCALE
 	const locale = {
-		about: { en: 'About', sp: 'Acerca De', fr: 'A Propos' }
+		about: { en: 'About', es: 'Acerca De', fr: 'A Propos' }
 	}
 
 	// PROPS
