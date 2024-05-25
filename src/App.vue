@@ -93,6 +93,7 @@
     dataLanguagePickerRef.value && dataLanguagePickerRef.value.cancelPicking()
     isDataLanguagePickerOn.value = false
     isUiLanguagePickerOn.value = false
+    uiLanguageStore.setUiLanguage()
   }
   const setUiLanguage = (l = null) => {
     uiLanguageStore.setUiLanguage(l)
