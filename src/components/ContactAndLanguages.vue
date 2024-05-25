@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<section-title :title="sectionTitle" />
+		<section-title :title="sectionTitle" id="contactandlanguages" />
 		<slot />
 	</section>
 </template>

@@ -1,6 +1,6 @@
 <template>
 	<section v-if="experienceUnits.length">
-		<section-title :title="sectionTitle" />
+		<section-title :title="sectionTitle" id="experience" />
 		<article>
 			<ul>
 				<li v-for="experienceUnit in experienceUnits" :key="experienceUnit.id">

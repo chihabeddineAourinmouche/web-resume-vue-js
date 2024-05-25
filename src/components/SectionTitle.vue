@@ -26,6 +26,7 @@
 	// PROPS
 	const props = defineProps({
 		title: { type: String },
+		id: { type: String },
 	})
 
 	// COMPUTED
@@ -34,7 +35,7 @@
 		const r = randomInt(0, 3)
 		return r < 1 ? 'flex-start' : r < 2 ? 'center' : 'flex-end'
 	})
-	const id = computed(() => `section-title-${props.title.toLowerCase()}`)
+	// const id = computed(() => `section-title-${encodeURIComponent(props.title).toLowerCase()}`)
 </script>
 
 <style scoped>

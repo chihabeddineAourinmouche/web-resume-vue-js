@@ -1,6 +1,6 @@
 <template>
 	<section v-if="filteredSkills.length">
-		<section-title :title="sectionTitle" />
+		<section-title :title="sectionTitle" id="skills" />
 		<article>
 			<h3>{{ filterHintText }}</h3>
 			<ul id="filter">

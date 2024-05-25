@@ -1,6 +1,6 @@
 <template>
 	<section v-if="projectsFilteredBySkills.length">
-		<section-title :title="sectionTitle" />
+		<section-title :title="sectionTitle" id="projects" />
 		<article>
 			<label for="project-search-input">
 				<span class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
