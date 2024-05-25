@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section v-if="experienceUnits.length">
 		<section-title :title="sectionTitle" />
 		<article>
 			<ul>
@@ -18,6 +18,17 @@
 
 	// VUE
 	import { computed } from 'vue'
+
+	// STORE
+	import { useUiLanguageStore } from '@/store/uiLanguage'
+
+	// STORE OBJECTS
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		experience: { en: 'Professional Experience', sp: 'Experiencia Profesional', fr: 'Experience Professionnelle' }
+	}							
 	
 	// PROPS
 	defineProps({
@@ -25,7 +36,11 @@
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => 'Professional Experience')
+	const sectionTitle = computed(() => getLocaleFor('experience'))
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+	
+	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 </script>
 
 <style scoped>

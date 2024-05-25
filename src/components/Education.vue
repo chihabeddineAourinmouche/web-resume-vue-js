@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section v-if="educationUnits.length">
 		<section-title :title="sectionTitle" />
 		<article>
 			<ul>
@@ -19,13 +19,28 @@
 	// VUE
 	import { computed } from 'vue'
 
+	// STORE
+	import { useUiLanguageStore } from '@/store/uiLanguage'
+
+	// STORE OBJECTS
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		education: { en: 'Education', sp: 'Educación', fr: 'Formation' }
+	}
+
 	// PROPS
 	defineProps({
 		educationUnits: { type: Array }
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => 'Education')
+	const sectionTitle = computed(() => getLocaleFor('education'))
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+
+	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 </script>
 
 <style scoped>

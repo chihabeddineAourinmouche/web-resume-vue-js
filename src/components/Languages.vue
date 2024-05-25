@@ -1,5 +1,5 @@
 <template>
-	<article>
+	<article v-if="languages.length">
 		<ul>
 			<li v-for="l in languages" :key="l.name">
 				<span :style="{ color: color(l.level) }">{{ l.levelName }}</span>

@@ -3,11 +3,11 @@
 		<p id="message">{{ message }}</p>
 		<ul>
 			<li
-				v-for="(language, index) in languages" :key="language"
+				v-for="(language, index) in languages" :key="language.code"
 				@click="pickLanguage(language)"
 			>
 				<span class="language-name" :style="{ color: index === 0 ? '#888' : '#aaa' }">
-					{{ language.toUpperCase() }}
+					{{ language.name }}
 				</span>
 				<span
 					v-if="index === 0"
@@ -20,8 +20,7 @@
 </template>
 
 <script setup>
-	const TARGET_TIME = 1000
-	const DEFAULT_LANGUAGE = 'en'
+	const TARGET_TIME = 3
 
 	// VUE
 	import { computed, onBeforeMount, ref } from 'vue'
@@ -53,7 +52,7 @@
 	const theme = computed(themeStore.getTheme)
 	
 	// METHODS
-	const pickLanguage = (l = DEFAULT_LANGUAGE) => {
+	const pickLanguage = (l = null) => {
 		clearInterval(countDownId.value)
 		emit('pick', l)
 	}
@@ -92,7 +91,6 @@
 		justify-content: space-evenly;
 		align-items: center;
 		gap: 10px;
-		padding: 50px 0;
 		overflow-y: auto;
 	}
 	li {

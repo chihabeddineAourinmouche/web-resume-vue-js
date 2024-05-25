@@ -35,9 +35,9 @@
   const uiLanguageStore = useUiLanguageStore()
 
   // COMPUTED PROPERTIES
+  const uiLanguages = computed(uiLanguageStore.getUiLanguages)
   const uiLanguage = computed(uiLanguageStore.getUiLanguage)
-  const data = computed(() => dataStore.getData(uiLanguage.value))
-  const uiLanguages = computed(dataStore.getUiLanguages)
+  const data = computed(() => dataStore.getData(uiLanguage.value?.code))
   const theme = computed(dataStore.getTheme)
 
   // METHODS
@@ -45,7 +45,7 @@
   const openModal = () => { modalRef.value && modalRef.value.open() }
   const closeModal = () => { modalRef.value && modalRef.value.close() }
   const modalSelfClose = () => { languagePickerRef.value && languagePickerRef.value.cancelPicking() }
-  const setUiLanguage = (l) => {
+  const setUiLanguage = (l = null) => {
     uiLanguageStore.setUiLanguage(l)
     closeModal()
   }

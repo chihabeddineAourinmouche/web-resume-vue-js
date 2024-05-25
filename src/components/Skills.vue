@@ -1,8 +1,8 @@
 <template>
-	<section>
-		<section-title  :title="sectionTitle" />
+	<section v-if="filteredSkills.length">
+		<section-title :title="sectionTitle" />
 		<article>
-			<h3>{{ filterHint }}</h3>
+			<h3>{{ filterHintText }}</h3>
 			<ul id="filter">
 				<li
 					class="filter-criteria"
@@ -52,12 +52,23 @@
 
 	// STORE
 	import { useThemeStore } from "@/store/theme"
+	import { useUiLanguageStore } from '@/store/uiLanguage'
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		skills: { en: 'Skills', sp: 'Habilidades', fr: 'Compétences' },
+		filterhinttext: {
+			en: "Filter by category",
+			sp: "Filtrar por categoría",
+			fr: "Filtrer par catégorie"
+		}
+	}
 
 	// REF
-	const filterHint = ref('Filter by category')
 	const selectedCategories = ref([])
 	const isSmallScreenRef = ref(getWindowInnerWidth() <= MIN_WIDTH)
 
@@ -67,7 +78,9 @@
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => 'Skills')
+	const sectionTitle = computed(() => getLocaleFor('skills'))
+	const filterHintText = computed(() => getLocaleFor('filterhinttext'))
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 	const isSmallScreen = computed(() => isSmallScreenRef.value)
 	const theme = computed(themeStore.getTheme)
 	const skillsSortedBylevelDesc = computed(() => props.skills.sort((a, b) => b.level - a.level))
@@ -83,6 +96,7 @@
 	})
 
 	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 	const categorySelected = (category) => selectedCategories.value.includes(category)
 	const clearFilter = () => selectedCategories.value = []
 	const selectCategory = (category) => selectedCategories.value.push(category)

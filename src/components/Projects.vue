@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section v-if="projectsFilteredBySkills.length">
 		<section-title :title="sectionTitle" />
 		<article>
 			<label for="project-search-input">
@@ -39,9 +39,16 @@
 
 	// STORE
 	import { useThemeStore } from "@/store/theme"
+	import { useUiLanguageStore } from '@/store/uiLanguage'
 
 	// STORE OBJECTS
 	const themeStore = useThemeStore()
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		projects: { en: 'Projects', sp: 'Proyectos', fr: 'Projets' }
+	}
 
 	// REF
 	const searchString = ref('')
@@ -52,7 +59,8 @@
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => 'Projects')
+	const sectionTitle = computed(() => getLocaleFor('projects'))
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 	const theme = computed(themeStore.getTheme)
 	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
 		if (searchString.value === '' || searchString.value.replaceAll(' ', '') === '') {
@@ -81,6 +89,9 @@
 		}
 	})
 	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
+
+	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 </script>
 
 <style scoped>

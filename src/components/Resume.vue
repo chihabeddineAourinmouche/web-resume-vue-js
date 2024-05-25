@@ -6,7 +6,7 @@
     </Header>
     <about :about="data.about" />
     <skills :skills="data.skills" />
-    <contact-and-languages>
+    <contact-and-languages :languages="data.languages">
       <contact :address="data.address" :emailAddress="data.emailAddress" />
       <languages :languages="data.languages" />
     </contact-and-languages>

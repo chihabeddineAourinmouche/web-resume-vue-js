@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<section-title  :title="sectionTitle" />
+		<section-title :title="sectionTitle" />
 		<article>
 			<p>{{ about }}</p>
 		</article>
@@ -14,13 +14,28 @@
 	// VUE
 	import { computed } from 'vue'
 
+	// STORE
+	import { useUiLanguageStore } from '@/store/uiLanguage'
+
+	// STORE OBJECTS
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		about: { en: 'About', sp: 'Acerca De', fr: 'A Propos' }
+	}
+
 	// PROPS
 	defineProps({
 		about: { type: String },
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => 'About')
+	const sectionTitle = computed(() => getLocaleFor('about'))
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+
+	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 </script>
 
 <style scoped>

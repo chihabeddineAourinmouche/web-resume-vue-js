@@ -2,13 +2,16 @@
 	<article>
 		<img
 			:style="{ borderColor: theme.secondaryColor }"
-			:src="profilePicture"
+			:src="profilePictureSrc"
 			alt="profile picture"
 		/>
 	</article>
 </template>
 
 <script setup>
+	// CONSTS
+	const DEFAULT_SRC = 'https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/default_profile_picture.jpg'
+
 	// VUE
 	import { computed } from 'vue'
 
@@ -19,12 +22,13 @@
 	const themeStore = useThemeStore()
 
 	// PROPS
-	defineProps({
+	const props = defineProps({
 		profilePicture: { type: String },
 	})
 
 	// COMPUTED
 	const theme = computed(themeStore.getTheme)
+	const profilePictureSrc = computed(() => props.profilePicture || DEFAULT_SRC)
 </script>
 
 <style scoped>

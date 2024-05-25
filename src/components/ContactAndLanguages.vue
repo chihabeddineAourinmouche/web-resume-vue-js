@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<section-title  :title="sectionTitle" />
+		<section-title :title="sectionTitle" />
 		<slot />
 	</section>
 </template>
@@ -11,9 +11,34 @@
 	
 	// VUE
 	import { computed } from 'vue';
+
+	// STORE
+	import { useUiLanguageStore } from '@/store/uiLanguage'
+
+	// STORE OBJECTS
+	const uiLanguageStore = useUiLanguageStore()
+
+	// LOCALE
+	const locale = {
+		contact: { en: 'Contact', sp: 'Contacto', fr: 'Contact' },
+		languages: { en: 'Languages', sp: 'Idiomas', fr: 'Langues' },
+	}
+
+	// PROPS
+	const props = defineProps({
+		languages: { type: Array },
+	})
 	
 	// COMPUTED
-	const sectionTitle = computed(() => 'Contact & Languages')
+	const sectionTitle = computed(() => `
+		${getLocaleFor('contact')}
+		${props.languages.length ? ' & ' : ''}
+		${props.languages.length ? getLocaleFor('languages') : ''}
+	`)
+	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
+
+	// METHODS
+	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
 </script>
 
 <style scoped>
