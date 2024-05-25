@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO - REMOVE @click EVENT AS IT IS ONLY USED FOR DEV PURPOSES -->
   <background v-if="data" />
   <resume v-if="data && uiLanguage" :data="data" @onDataLanguageButtonClick="openDataLanguagePicker" />
   <modal icon="fa-solid fa-language" @onSelfClose="modalSelfClose" ref="modalRef">
@@ -112,7 +111,7 @@
     setTheme()
     setTitle(`${data.value.firstName} ${data.value.lastName}`)
     setBodyStyle({ backgroundColor: theme.value.primaryColor })
-    !uiLanguage.value && openUiLanguagePicker()//openModal()
+    !uiLanguage.value && openUiLanguagePicker()
   })
 </script>
 

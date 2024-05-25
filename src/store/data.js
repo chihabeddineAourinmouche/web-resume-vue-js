@@ -1,7 +1,8 @@
-const response = {
+const HARDCODED_RESPONSE = {
 	"data": {
 		"record": {
 			"resume": {
+				"id": 1,
 				"educationUnits": [
 				  {
 					"id": 1,
@@ -636,7 +637,6 @@ const response = {
 				  "fr": "En résumé, je suis un(e) ingénieur(e) Web et concepteur(trice) de jeux (développeur(euse)) passionné(e) par les API RESTful. Je consacrerais 6 heures à la création d'un script pour automatiser un processus de 15 minutes qui se répétera 24 fois.",
 				  "es": "En resumen, soy un(a) entusiasta Ingeniero(a) Web y Diseñador(a) de Juegos (Desarrollador(a)) con un particular interés en las API RESTful. Dedicaría 6 horas a crear un script para automatizar un proceso de 15 minutos que se repetirá 24 veces."
 				},
-				"id": 1,
 				"address": {
 					"id": 1,
 					"street": "",
@@ -649,7 +649,7 @@ const response = {
 				"firstName": "Chihabeddine",
 				"lastName": "AOURINMOUCHE",
 				"emailAddress": "chihab2007@gmail.com",
-				"image": ""
+				"image": "https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/profile_picture.jpg"
 			},
 			"theme": {
 				"primaryColor": "#efefef",
@@ -683,7 +683,7 @@ const response = {
 			]
 		}
 	}
-}
+}// TODO - REMOVE, THIS IS ONLY FOR DEV PURPOSES
 
 import axios from 'axios'
 import { defineStore } from 'pinia'
@@ -691,45 +691,47 @@ import { defineStore } from 'pinia'
 const JSON_BIN_API_URL = import.meta.env.VITE_JSON_BIN_API_URL
 const X_MASTER_KEY = import.meta.env.VITE_JSON_BIN_X_MASTER_KEY
 
+const DEV = 0// TODO - REMIVE, THIS IS ONLY FOR DEV PURPOSES
+
 export const useDataStore = defineStore('data', () => {
 	return {
 		data: null,
 		dataLanguage: null,
 
 		// GETTERS
-		getTheme() { return this.data?.theme },
-		getDataLanguages() { return this.data?.dataLanguages },
+		getTheme() { return this.data.theme },
+		getDataLanguages() { return this.data.dataLanguages },
 		getDataLanguage() { return this.dataLanguage },
 		getData() {
-			const language = this.getDataLanguage().code
-			const resume = JSON.parse(JSON.stringify(this.data?.resume))// AVOID MODIFYING THE ORIGINAL DATA
-			resume.title = resume.title[language]
-			resume.about = resume.about[language]
-			resume.skills = resume.skills.map(i => {
-				/* console.log(i.category) */
-				i.category = i.category[language]
-				/* console.log(i.category)
-				debugger */
-				return i
-			})
-			resume.languages = resume.languages.map(i => {
-				i.name = i.name[language]
-				return i
-			})
-			resume.educationUnits = resume.educationUnits.map(i => {
-				i.description = i.description[language]
-				return i
-			})
-			resume.experienceUnits = resume.experienceUnits.map(i => {
-				i.jobTitle = i.jobTitle[language]
-				i.description = i.description[language]
-				return i
-			})
-			resume.projects = resume.projects.map(i => {
-				i.description = i.description[language]
-				return i
-			})
-			return resume
+			if (this.data) {
+				const language = this.getDataLanguage().code
+				const resume = JSON.parse(JSON.stringify(this.data.resume))// AVOID MODIFYING THE ORIGINAL DATA
+				resume.title = resume.title[language]
+				resume.about = resume.about[language]
+				resume.skills = resume.skills.map(i => {
+					i.category = i.category[language]
+					return i
+				})
+				resume.languages = resume.languages.map(i => {
+					i.name = i.name[language]
+					return i
+				})
+				resume.educationUnits = resume.educationUnits.map(i => {
+					i.description = i.description[language]
+					return i
+				})
+				resume.experienceUnits = resume.experienceUnits.map(i => {
+					i.jobTitle = i.jobTitle[language]
+					i.description = i.description[language]
+					return i
+				})
+				resume.projects = resume.projects.map(i => {
+					i.description = i.description[language]
+					return i
+				})
+				return resume
+			}
+			return null
 		},
 
 		// ACTIONS
@@ -738,12 +740,11 @@ export const useDataStore = defineStore('data', () => {
 		},
 		async fetchData() {
 			try {
-				// const response = await axios.get(JSON_BIN_API_URL, {
-				// 	headers: {
-				// 		'x-master-key': X_MASTER_KEY,
-				// 	},
-				// })
+				/*
+				const response = await axios.get(JSON_BIN_API_URL, { headers: { 'x-master-key': X_MASTER_KEY } })
 				this.data = response.data.record
+				*/
+				this.data = HARDCODED_RESPONSE.data.record// TODO - REMOVE, THIS IS ONLY FOR DEV PURPOSES
 				this.setDataLanguage()
 			} catch (error) { throw error }
 		}

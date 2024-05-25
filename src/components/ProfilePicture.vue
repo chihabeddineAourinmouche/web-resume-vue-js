@@ -4,6 +4,7 @@
 			:style="{ borderColor: theme.secondaryColor }"
 			:src="profilePictureSrc"
 			alt="profile picture"
+			draggable="false"
 		/>
 	</article>
 </template>

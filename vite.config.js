@@ -11,7 +11,7 @@ export default defineConfig({
     host: true
   },
   plugins: [vue()],
-  base: ['', REPO_NAME][0],
+  base: ['', REPO_NAME][1],// TODO - MAKE SURE TO ADDRESS THIS IN THE FUTURE
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
