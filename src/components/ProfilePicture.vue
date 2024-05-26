@@ -11,7 +11,7 @@
 
 <script setup>
 	// CONSTS
-	const DEFAULT_SRC = 'https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/default_profile_picture.jpg'
+	const DEFAULT_SRC = 'https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/images/default_profile_picture.jpg'
 
 	// VUE
 	import { computed } from 'vue'

@@ -649,7 +649,7 @@ const HARDCODED_RESPONSE = {
 				"firstName": "Chihabeddine",
 				"lastName": "AOURINMOUCHE",
 				"emailAddress": "chihab2007@gmail.com",
-				"image": "https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/profile_picture.jpg"
+				"image": "https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/images/profile_picture.jpg"
 			},
 			"theme": {
 				"primaryColor": "#efefef",
