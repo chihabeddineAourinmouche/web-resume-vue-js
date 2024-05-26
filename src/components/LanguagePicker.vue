@@ -106,7 +106,6 @@
 		justify-content: space-between;
 		align-items: center;
 		color: #aaa;
-		font-weight: bold;
 		font-size: 1.2em;
 	}
 	li:hover {

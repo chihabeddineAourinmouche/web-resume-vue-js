@@ -147,7 +147,6 @@
 	}
 	.skill-name {
 		text-align: left;
-		font-weight: bold;
 	}
 	#filter {
 		display: flex;

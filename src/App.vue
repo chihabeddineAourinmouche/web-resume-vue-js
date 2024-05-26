@@ -38,17 +38,17 @@
   import { useThemeStore } from '@/store/theme'
   import { useUiLanguageStore } from '@/store/uiLanguage'
 
+  // STORE OBJECTS
+  const dataStore = useDataStore()
+  const themeStore = useThemeStore()
+  const uiLanguageStore = useUiLanguageStore()
+
   // REF
   const modalRef = ref()
   const isUiLanguagePickerOn = ref()
   const isDataLanguagePickerOn = ref()
   const uiLanguagePickerRef = ref()
   const dataLanguagePickerRef = ref()
-
-  // STORE OBJECTS
-  const dataStore = useDataStore()
-  const themeStore = useThemeStore()
-  const uiLanguageStore = useUiLanguageStore()
 
   // LOCALE
   const locale = {
@@ -114,5 +114,3 @@
     !uiLanguage.value && openUiLanguagePicker()
   })
 </script>
-
-<style scoped></style>

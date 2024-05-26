@@ -691,8 +691,6 @@ import { defineStore } from 'pinia'
 const JSON_BIN_API_URL = import.meta.env.VITE_JSON_BIN_API_URL
 const X_MASTER_KEY = import.meta.env.VITE_JSON_BIN_X_MASTER_KEY
 
-const DEV = 0// TODO - REMIVE, THIS IS ONLY FOR DEV PURPOSES
-
 export const useDataStore = defineStore('data', () => {
 	return {
 		data: null,
@@ -735,9 +733,7 @@ export const useDataStore = defineStore('data', () => {
 		},
 
 		// ACTIONS
-		setDataLanguage(language = null) {
-			this.dataLanguage = language ?? this.getDataLanguages()[0]
-		},
+		setDataLanguage(language = null) { this.dataLanguage = language ?? this.getDataLanguages()[0] },
 		async fetchData() {
 			try {
 				/*

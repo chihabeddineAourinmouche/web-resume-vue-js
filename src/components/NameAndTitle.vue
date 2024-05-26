@@ -36,6 +36,5 @@
 	}
 	h2 {
 		font-size: 1.7em;
-		font-weight: 500;
 	}
 </style>

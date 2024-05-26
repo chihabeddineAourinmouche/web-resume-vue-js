@@ -34,7 +34,6 @@
 
 <style scoped>
 	ul {
-		font-weight: bold;
 		text-align: right;
 		display: flex;
 		align-items: center;
