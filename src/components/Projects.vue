@@ -1,31 +1,59 @@
 <template>
 	<section v-if="projectsFilteredBySkills.length || searchString">
-		<section-title :title="sectionTitle" id="projects" />
+		<section-title :title="sectionTitle" :id="uiName" />
 		<article>
+			<button
+				@mouseleave="switchInfoBubbleOff"
+				:style="{
+					backgroundColor: isInfoBubbleOn ? theme.tertiaryColor : 'inherit',
+				}"
+			>
+				<span
+					@click="switchInfoBubble"
+					id="button-icon"
+					class="fa-solid fa-circle-info fa-lg"
+					:style="{
+						color: isInfoBubbleOn ? theme.primaryColor : theme.tertiaryColor,
+					}"
+				/>
+				<span
+					v-if="isInfoBubbleOn"
+					id="info-bubble"
+					:style="{
+						color: theme.tertiaryColorContrast,
+					}"
+				>{{ infoBubbleText }}</span>
+			</button>
 			<label for="project-search-input">
 				<span class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
 				<input
 					id="project-search-input"
 					type="text"
-					:placeholder="`ex. ${placeholderSkills}`"
+					:placeholder="`e.g. ${placeholderSkills}`"
 					v-model="searchString"
 					:style="{ borderBottomColor: theme.tertiaryColor }"
 				/>
 			</label>
-			<ul id="project-list">
+			<ul v-if="projectsFilteredBySkills.length" id="project-list">
 				<li v-for="project in projectsFilteredBySkills" :key="project.id" class="project">
 					<h3>{{ project.name }}</h3>
 					<p>{{ project.description }}</p>
 					<ul class="project-skill-list">
 						<li v-for="skill in project.skills" :key="skill">
 							<span
+								@click="!isSkillSearchedFor(skill) && setSearchString(skill)"
 								class="project-skill"
-								:style="{ backgroundColor: theme.tertiaryColor, color: theme.tertiaryColorContrast }"
+								:style="{
+									backgroundColor: isSkillSearchedFor(skill) ? theme.secondaryColor : theme.tertiaryColor,
+									color: isSkillSearchedFor(skill) ? theme.secondaryColorContrast : theme.tertiaryColorContrast,
+									cursor: isSkillSearchedFor(skill) ? 'initial' : 'pointer',
+								}"
 							>{{ skill }}</span>
 						</li>
 					</ul>
 				</li>
 			</ul>
+			<p v-else id="no-project-fallback">{{ noProjectFallbackText }}</p>
 		</article>
 	</section>
 </template>
@@ -37,6 +65,9 @@
 	// VUE
 	import { ref, computed } from 'vue'
 
+	// UTILS
+	import { getUiText } from '@/utils/ui'
+
 	// STORE
 	import { useThemeStore } from "@/store/theme"
 	import { useUiLanguageStore } from '@/store/uiLanguage'
@@ -45,13 +76,10 @@
 	const themeStore = useThemeStore()
 	const uiLanguageStore = useUiLanguageStore()
 
-	// LOCALE
-	const locale = {
-		projects: { en: 'Projects', es: 'Proyectos', fr: 'Projets' }
-	}
-
 	// REF
+	const uiName = ref('projects')
 	const searchString = ref('')
+	const isInfoBubbleOn = ref(false)
 
 	// PROPS
 	const props = defineProps({
@@ -59,7 +87,10 @@
 	})
 
 	// COMPUTED
+	const locale = computed(() => getUiText(uiName.value))
 	const sectionTitle = computed(() => getLocaleFor('projects'))
+	const noProjectFallbackText = computed(() => getLocaleFor('noprojectfallback'))
+	const infoBubbleText = computed(() => getLocaleFor('infobubbletext'))
 	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 	const theme = computed(themeStore.getTheme)
 	const projectsFilteredBySkills = computed(() => projectsSortedBySkillCountDesc.value.filter(project => {
@@ -91,7 +122,18 @@
 	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
 
 	// METHODS
-	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+	const switchInfoBubble = () => { isInfoBubbleOn.value = !isInfoBubbleOn.value }
+	const switchInfoBubbleOff = () => { isInfoBubbleOn.value = false }
+	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
+	const setSearchString = (s) => { searchString.value = s }
+	const isSkillSearchedFor = (skill) => {
+		const searchStrings = searchString.value.split(',').filter(s => s !== '')
+		return searchStrings.some(item => {
+			return skill.replaceAll(' ', '').toLowerCase().includes(item.replaceAll(' ', '').toLowerCase())
+		})
+	}
+
+	defineExpose({ setSearchString })
 </script>
 
 <style scoped>
@@ -112,7 +154,7 @@
 	  display: flex;
 	  flex-direction: column;
 	  justify-content: space-between;
-	  gap: 20px;
+	  align-items: flex-end;
 	}
 	@media (max-width: 350px) {
 		article {
@@ -123,6 +165,34 @@
 		article {
 			padding: 20px 5%;
 		}
+	}
+	article > :not(:first-child):not(:last-child) {
+		margin-bottom: 20px;
+	}
+	button {
+		all: unset;
+		border: none;
+		background: none;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 10px;
+		padding: 5px 5px 5px 10px;
+		height: 20px;
+		max-width: 350px;
+		border-radius: 15px;
+		cursor: default;
+	}
+	#button-icon {
+		cursor: pointer;
+		opacity: .3;
+	}
+	#button-icon:hover {
+		opacity: 1;
+	}
+	#info-bubble {
+		font-size: .7em;
 	}
 	label {
 		position: relative;
@@ -135,7 +205,6 @@
 		left: 10px;
 	}
 	input {
-		outline: none;
 		border: none;
 		border-bottom-width: 2px;
 		border-bottom-style: solid;
@@ -149,6 +218,11 @@
 	  flex-direction: column;
 	  justify-content: space-between;
 	  gap: 20px;
+	}
+	#project-list > li {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
 	}
 	p {
 		font-size: .8em;
@@ -166,5 +240,8 @@
 		padding: 2px 5px;
 		display: flex;
 		border-radius: 15px;
+	}
+	#no-project-fallback {
+		width: 100%;
 	}
 </style>

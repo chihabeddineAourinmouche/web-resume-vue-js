@@ -7,7 +7,7 @@
     
     <about :about="data.about" />
     
-    <skills :skills="data.skills" />
+    <skills :skills="data.skills" @onUpdateProjectSearchString="updateProjectSearchString" />
     
     <contact-and-languages :languages="data.languages">
       <contact :address="data.address" :emailAddress="data.emailAddress" />
@@ -18,7 +18,7 @@
     
     <experience :experienceUnits="data.experienceUnits" />
     
-    <projects v-if="data.projects.length" :projects="data.projects" />
+    <projects v-if="data.projects.length" :projects="data.projects" ref="projectsRef" />
   </div>
 </template>
 
@@ -36,6 +36,12 @@
   import Experience from '@/components/Experience.vue'
   import Projects from '@/components/Projects.vue'
 
+  // VUE
+  import { ref } from 'vue'
+
+  // REF
+  const projectsRef = ref('')
+
   // EMITS
   defineEmits(['onDataLanguageButtonClick'])
 
@@ -43,6 +49,11 @@
   defineProps({
     data: { type: Object }
   })
+
+  // METHODS
+  const updateProjectSearchString = (s) => {
+    projectsRef.value && projectsRef.value.setSearchString(s)
+  }
 </script>
 
 <style scoped>

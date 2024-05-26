@@ -1,7 +1,29 @@
 <template>
 	<section v-if="filteredSkills.length">
-		<section-title :title="sectionTitle" id="skills" />
+		<section-title :title="sectionTitle" :id="uiName" />
 		<article>
+			<button
+				@mouseleave="switchInfoBubbleOff"
+				:style="{
+					backgroundColor: isInfoBubbleOn ? theme.tertiaryColor : 'inherit',
+				}"
+			>
+				<span
+					@click="switchInfoBubble"
+					id="button-icon"
+					class="fa-solid fa-circle-info fa-lg"
+					:style="{
+						color: isInfoBubbleOn ? theme.primaryColor : theme.tertiaryColor,
+					}"
+				/>
+				<span
+					v-if="isInfoBubbleOn"
+					id="info-bubble"
+					:style="{
+						color: theme.tertiaryColorContrast,
+					}"
+				>{{ infoBubbleText }}</span>
+			</button>
 			<h3>{{ filterHintText }}</h3>
 			<ul id="filter">
 				<li
@@ -9,7 +31,7 @@
 					v-for="category in skillCategorySet" :key="category"
 					:style="{
 						backgroundColor: categorySelected(category) ? theme.secondaryColor : theme.tertiaryColor,
-						color: theme.tertiaryColorContrast,
+						color: categorySelected(category) ? theme.secondaryColorContrast : theme.tertiaryColorContrast,
 						fontWeight: categorySelected(category) ? 'bolder' : 'normal'
 					}"
 					@click="categorySelected(category) ? unSelectCategory(category) : selectCategory(category)"
@@ -18,16 +40,20 @@
 			</ul>
 			<ul v-if="isSmallScreen" class="skill-view" id="skill-view-small-screen">
 				<li class="skill" v-for="s in filteredSkills" :key="s.name">
-					<star-rating :rating="s.level" />
-					<span class="skill-name">{{ s.name }}</span>
+					<a :href="`#${skillLink}`" @click="$emit('onUpdateProjectSearchString', s.name)">
+						<star-rating :rating="s.level" />
+						<span class="skill-name">{{ s.name }}</span>
+					</a>
 				</li>
 			</ul>
 			<ul v-else class="skill-view">
 				<li class="segment" v-for="segment in filteredSkillSegments" :key="segment">
 					<ul class="segment-skills">
 						<li class="skill" v-for="s in segment" :key="s.name">
-							<star-rating :rating="s.level" />
-							<span class="skill-name">{{ s.name }}</span>
+							<a href="#projects" @click="$emit('onUpdateProjectSearchString', s.name)">
+								<star-rating :rating="s.level" />
+								<span class="skill-name">{{ s.name }}</span>
+							</a>
 						</li>
 					</ul>
 				</li>
@@ -49,6 +75,7 @@
 
 	// UTILS
 	import { getWindowInnerWidth, watchHorizontalResize } from '@/utils/dom'
+	import { getUiText } from '@/utils/ui'
 
 	// STORE
 	import { useThemeStore } from "@/store/theme"
@@ -58,19 +85,14 @@
 	const themeStore = useThemeStore()
 	const uiLanguageStore = useUiLanguageStore()
 
-	// LOCALE
-	const locale = {
-		skills: { en: 'Skills', es: 'Habilidades', fr: 'Compétences' },
-		filterhinttext: {
-			en: "Filter by category",
-			es: "Filtrar por categoría",
-			fr: "Filtrer par catégorie"
-		}
-	}
-
 	// REF
+	const uiName = ref('skills')
 	const selectedCategories = ref([])
 	const isSmallScreenRef = ref(getWindowInnerWidth() <= MIN_WIDTH)
+	const isInfoBubbleOn = ref(false)
+
+	// EMITS
+	defineEmits(['onUpdateProjectSearchString'])
 
 	// PROPS
 	const props = defineProps({
@@ -78,8 +100,12 @@
 	})
 
 	// COMPUTED
-	const sectionTitle = computed(() => getLocaleFor('skills'))
+	
+	const locale = computed(() => getUiText(uiName.value))
+	const skillLink = computed(() => locale.value.skillLink)
+	const sectionTitle = computed(() => getLocaleFor('sectiontitletext'))
 	const filterHintText = computed(() => getLocaleFor('filterhinttext'))
+	const infoBubbleText = computed(() => getLocaleFor('infobubbletext'))
 	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 	const isSmallScreen = computed(() => isSmallScreenRef.value)
 	const theme = computed(themeStore.getTheme)
@@ -96,7 +122,9 @@
 	})
 
 	// METHODS
-	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+	const switchInfoBubble = () => { isInfoBubbleOn.value = !isInfoBubbleOn.value }
+	const switchInfoBubbleOff = () => { isInfoBubbleOn.value = false }
+	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
 	const categorySelected = (category) => selectedCategories.value.includes(category)
 	const clearFilter = () => selectedCategories.value = []
 	const selectCategory = (category) => selectedCategories.value.push(category)
@@ -125,9 +153,36 @@
 		  display: flex;
 		  flex-direction: column;
 		  justify-content: center;
-		  gap: 20px;
+		  align-items: flex-start;
 		  padding: 30px;
-		  text-decoration: none;
+	}
+	article > :not(:first-child):not(:last-child) {
+		margin-bottom: 20px;
+	}
+	button {
+		all: unset;
+		border: none;
+		background: none;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 10px;
+		padding: 5px 5px 5px 10px;
+		height: 20px;
+		border-radius: 15px;
+		cursor: default;
+		margin: auto; margin-right: 0; /* MAKE ELEMENT VERTICALLY ALIGN TO THE LEFT AGAINST PARENT FLEX ITEM ALIGNMENT*/
+	}
+	#button-icon {
+		cursor: pointer;
+		opacity: .3;
+	}
+	#button-icon:hover {
+		opacity: 1;
+	}
+	#info-bubble {
+		font-size: .7em;
 	}
 	.skill-view {
 		display: flex;
@@ -139,11 +194,15 @@
 		  justify-content: center;
 		  gap: 5px;
 	}
-	.skill {
+	.skill a {
 		display: flex;
-		justify-content: flex-start;
-		gap: 5px;
 		flex-wrap: wrap;
+		gap: 5px;
+		padding: 0 5px;
+	}
+	.skill a:hover {
+		background-color: #f0f0f0;
+		border-radius: 15px;
 	}
 	.skill-name {
 		text-align: left;
@@ -158,6 +217,8 @@
 	h3 {
 		opacity: .3;
 		font-size: 1em;
+		text-align: left;
+		width: 100%;
 	}
 	.filter-criteria {
 		padding: 2px 5px;

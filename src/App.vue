@@ -31,6 +31,7 @@
 
   // UTILS
   import { setBodyStyle } from '@/utils/dom'
+	import { getUiText } from '@/utils/ui'
 
   // STORE
   import { useDataStore } from '@/store/data'
@@ -44,22 +45,15 @@
   const uiLanguageStore = useUiLanguageStore()
 
   // REF
+  const uiName = ref('app')
   const modalRef = ref()
   const isUiLanguagePickerOn = ref()
   const isDataLanguagePickerOn = ref()
   const uiLanguagePickerRef = ref()
   const dataLanguagePickerRef = ref()
 
-  // LOCALE
-  const locale = {
-    dataLanguagePickerMessage: {
-      en: "Pick a language you would like to view the UI in (Default is English)",
-      es: "Seleccione la versión del idioma de los datos del currículum",
-      fr: "Sélectionnez la version linguistique des données du CV"
-    }
-  }
-
   // COMPUTED PROPERTIES
+	const locale = computed(() => getUiText(uiName.value))
   const displayDataLanguagePicker = computed(() => isDataLanguagePickerOn.value)
   const displayUiLanguagePicker = computed(() => isUiLanguagePickerOn.value)
   const uiLanguages = computed(uiLanguageStore.getUiLanguages)
@@ -68,8 +62,8 @@
   const dataLanguages = computed(dataStore.getDataLanguages)
   const dataLanguage = computed(dataStore.getDataLanguage)
   const theme = computed(dataStore.getTheme)
-  const dataLanguagePickerMessage = computed(() => getLocaleFor('dataLanguagePickerMessage'))
-  const uiLanguagePickerMessage = computed(() => "Pick a language you would like to view the UI in (Default is English)")
+  const dataLanguagePickerMessage = computed(() => getLocaleFor('datalanguagepickermessage'))
+  const uiLanguagePickerMessage = computed(() => locale.value['uilanguagepickmessage'])
 
   // METHODS
   const openDataLanguagePicker = () => {
@@ -103,7 +97,7 @@
     closeModal()
   }
   const fetchData = async () => { await dataStore.fetchData() }
-  const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+  const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
   
   // LIFECYCLE HOOKS
   onBeforeMount(async () => {

@@ -1,6 +1,6 @@
 <template>
 	<section v-if="experienceUnits.length">
-		<section-title :title="sectionTitle" id="experience" />
+		<section-title :title="sectionTitle" :id="uiName" />
 		<article>
 			<ul>
 				<li v-for="experienceUnit in experienceUnits" :key="experienceUnit.id">
@@ -17,7 +17,10 @@
 	import SectionTitle from '@/components/SectionTitle.vue'
 
 	// VUE
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
+
+	// UTILS
+	import { getUiText } from '@/utils/ui'
 
 	// STORE
 	import { useUiLanguageStore } from '@/store/uiLanguage'
@@ -25,10 +28,8 @@
 	// STORE OBJECTS
 	const uiLanguageStore = useUiLanguageStore()
 
-	// LOCALE
-	const locale = {
-		experience: { en: 'Professional Experience', es: 'Experiencia Profesional', fr: 'Experience Professionnelle' }
-	}							
+	// REF
+	const uiName = ref('experience')						
 	
 	// PROPS
 	defineProps({
@@ -36,11 +37,12 @@
 	})
 
 	// COMPUTED
+	const locale = computed(() => getUiText(uiName.value))
 	const sectionTitle = computed(() => getLocaleFor('experience'))
 	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 	
 	// METHODS
-	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
 </script>
 
 <style scoped>

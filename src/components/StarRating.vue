@@ -39,4 +39,9 @@
 		align-items: center;
 		font-size: .8em;
 	}
+
+	ul,
+	li {
+		cursor: inherit;
+	}
 </style>

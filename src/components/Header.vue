@@ -1,12 +1,12 @@
 <template>
 	<section>
-		<slot />
 		<button @click="$emit('onDataLanguageButtonClick')">
 			<span
-			class="fa-solid fa-language fa-2x"
-			:style="{ color: theme.tertiaryColor }"
+				class="fa-solid fa-language fa-2x"
+				:style="{ color: theme.tertiaryColor }"
 			/>
 		</button>
+		<slot />
 	</section>
 </template>
 

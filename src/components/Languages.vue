@@ -11,7 +11,10 @@
 
 <script setup>
 	// VUE
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
+
+	// UTILS
+	import { getUiText } from '@/utils/ui'
 
 	// STORE
 	import { useUiLanguageStore } from '@/store/uiLanguage'
@@ -19,13 +22,7 @@
 	// STORE OBJECTS
 	const uiLanguageStore = useUiLanguageStore()
 
-	// LOCALE
-	const locale = {
-		0: { en: 'Beginner', es: 'Principiante', fr: 'Débutant' },
-		1: { en: 'Intermediate', es: 'Intermedio', fr: 'Intermédiaire' },
-		2: { en: 'Proficient', es: 'Avanzado', fr: 'Avancé' },
-		3: { en: 'Bilingual', es: 'Bilingüe', fr: 'Bilingue' },
-	}
+	const uiName = ref('languages')
 
 	// PROPS
 	defineProps({
@@ -33,10 +30,11 @@
 	})
 
 	// COMPUTED
+	const locale = computed(() => getUiText(uiName.value))
 	const uiLanguage = computed(() => uiLanguageStore.getUiLanguage())
 
 	// METHODS
-	const getLocaleFor = (text) => locale[text][uiLanguage.value.code]
+	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
 	const color = (level) => {
 		return level === 0
 			? '#bd3a3a'
@@ -57,7 +55,6 @@
 		  flex-direction: column;
 		  gap: 5px;
 		  padding: 10px;
-		  text-decoration: none;
 	}
 	li {
 		display: flex;

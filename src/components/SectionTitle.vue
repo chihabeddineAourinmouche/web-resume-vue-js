@@ -49,9 +49,7 @@
 		max-width: 700px;
 		margin-top: 20px;
 		padding: 0px 50px;
-		outline: none;
 		cursor: pointer;
-		text-decoration: none;
 	}
 
 	a:hover {

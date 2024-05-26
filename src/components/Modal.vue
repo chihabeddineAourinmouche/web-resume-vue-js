@@ -103,7 +103,6 @@
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: space-between;
-		/* align-items: center; */
 		align-items: flex-start;
 		padding: 10px;
 	}

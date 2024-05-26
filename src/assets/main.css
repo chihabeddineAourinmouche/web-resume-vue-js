@@ -8,9 +8,10 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
-  cursor: default;
   font-family: "Lato-Regular";
   font-weight: 100;
+  text-decoration: none;
+  outline: none;
 }
 
 body {

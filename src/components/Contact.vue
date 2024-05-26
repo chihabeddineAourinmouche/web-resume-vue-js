@@ -44,7 +44,6 @@
 		user-select: text;
 		align-items: center;
 		color: inherit;
-		text-decoration: none;
 	}
 	i,
 	span {
