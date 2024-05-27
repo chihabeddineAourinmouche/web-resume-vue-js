@@ -27,3 +27,7 @@ body {
 ul {
   list-style-type: none;
 }
+
+input, textarea {
+  user-select: initial;
+}
