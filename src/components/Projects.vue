@@ -24,15 +24,15 @@
 					}"
 				>{{ infoBubbleText }}</span>
 			</button>
-			<label for="project-search-input">
+			<label for="project-search-input" :style="{ borderBottomColor: theme.tertiaryColor }">
 				<span class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
 				<input
 					id="project-search-input"
 					type="text"
 					:placeholder="`e.g. ${placeholderSkills}`"
 					v-model="searchString"
-					:style="{ borderBottomColor: theme.tertiaryColor }"
 				/>
+				<span v-if="searchString" id="search-clear" class="fa-solid fa-xmark search-icon" @click="setSearchString()" />
 			</label>
 			<ul v-if="projectsFilteredBySkills.length" id="project-list">
 				<li v-for="project in projectsFilteredBySkills" :key="project.id" class="project">
@@ -125,7 +125,7 @@
 	const switchInfoBubble = () => { isInfoBubbleOn.value = !isInfoBubbleOn.value }
 	const switchInfoBubbleOff = () => { isInfoBubbleOn.value = false }
 	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
-	const setSearchString = (s) => { searchString.value = s }
+	const setSearchString = (s = '') => { searchString.value = s }
 	const isSkillSearchedFor = (skill) => {
 		const searchStrings = searchString.value.split(',').filter(s => s !== '')
 		return searchStrings.some(item => {
@@ -195,23 +195,23 @@
 		font-size: .7em;
 	}
 	label {
-		position: relative;
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 		width: 100%;
-	}
-	.search-icon {
-		position: absolute;
-		left: 10px;
+		border-bottom-width: 2px;
+		border-bottom-style: solid;
 	}
 	input {
 		border: none;
-		border-bottom-width: 2px;
-		border-bottom-style: solid;
 		width: 100%;
 		height: 50px;
-		padding: 5px 5px 5px 35px;
+		padding: 5px 15px;
 		cursor: text;
+	}
+	#search-clear {
+		color: #e35549;
+		cursor: pointer;
 	}
 	#project-list {
 	  display: flex;
