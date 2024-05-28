@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-	const WAITING_TIME = 10
+	const WAITING_TIME = 3
 
 	// VUE
 	import { computed, onBeforeMount, ref } from 'vue'

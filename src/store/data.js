@@ -422,9 +422,9 @@ const HARDCODED_RESPONSE = {
 				"image": "https://raw.githubusercontent.com/chihabeddineAourinmouche/web-resume-vue-js.github.io/main/src/assets/images/profile_picture.jpg"
 			},
 			"theme": {
-				"primaryColor": "#efefef",
-				"secondaryColor": "#b35949",
-				"tertiaryColor": "#d6c6c3",
+				"primaryColor": "" || "#efefef",
+				"secondaryColor": "" || "#b35949",
+				"tertiaryColor": "" || "#d6c6c3",
 				"backgroundIcons": [
 					"fa-solid fa-cloud",
 					"fa-solid fa-terminal",
