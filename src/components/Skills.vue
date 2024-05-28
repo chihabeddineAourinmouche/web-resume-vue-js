@@ -2,28 +2,7 @@
 	<section v-if="filteredSkills.length">
 		<section-title :title="sectionTitle" :id="uiName" />
 		<article>
-			<button
-				@mouseleave="switchInfoBubbleOff"
-				:style="{
-					backgroundColor: isInfoBubbleOn ? theme.tertiaryColor : 'inherit',
-				}"
-			>
-				<span
-					@click="switchInfoBubble"
-					id="button-icon"
-					class="fa-solid fa-circle-info fa-lg"
-					:style="{
-						color: isInfoBubbleOn ? theme.primaryColor : theme.tertiaryColor,
-					}"
-				/>
-				<span
-					v-if="isInfoBubbleOn"
-					id="info-bubble"
-					:style="{
-						color: theme.tertiaryColorContrast,
-					}"
-				>{{ infoBubbleText }}</span>
-			</button>
+			<info-bubble :infoBubbleText="infoBubbleText" />
 			<h3>{{ filterHintText }}</h3>
 			<ul id="filter">
 				<li
@@ -69,6 +48,7 @@
 	// COMPONENTS
 	import StarRating from '@/components/StarRating.vue'
 	import SectionTitle from '@/components/SectionTitle.vue'
+	import InfoBubble from '@/components/InfoBubble.vue'
 
 	// VUE
 	import { ref, computed, onBeforeMount } from 'vue'
@@ -89,7 +69,6 @@
 	const uiName = ref('skills')
 	const selectedCategories = ref([])
 	const isSmallScreenRef = ref(getWindowInnerWidth() <= MIN_WIDTH)
-	const isInfoBubbleOn = ref(false)
 
 	// EMITS
 	defineEmits(['onUpdateProjectSearchString'])
@@ -100,7 +79,6 @@
 	})
 
 	// COMPUTED
-	
 	const locale = computed(() => getUiText(uiName.value))
 	const skillLink = computed(() => locale.value.skillLink)
 	const sectionTitle = computed(() => getLocaleFor('sectiontitletext'))
@@ -122,8 +100,6 @@
 	})
 
 	// METHODS
-	const switchInfoBubble = () => { isInfoBubbleOn.value = !isInfoBubbleOn.value }
-	const switchInfoBubbleOff = () => { isInfoBubbleOn.value = false }
 	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
 	const categorySelected = (category) => selectedCategories.value.includes(category)
 	const clearFilter = () => selectedCategories.value = []
@@ -154,35 +130,19 @@
 		  flex-direction: column;
 		  justify-content: center;
 		  align-items: flex-start;
-		  padding: 30px;
+	}
+	@media (max-width: 350px) {
+		article {
+			padding: 20px 20px;
+		}
+	}
+	@media (min-width: 350px) {
+		article {
+			padding: 20px 5%;
+		}
 	}
 	article > :not(:first-child):not(:last-child) {
 		margin-bottom: 20px;
-	}
-	button {
-		all: unset;
-		border: none;
-		background: none;
-		display: flex;
-		flex-direction: row-reverse;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 10px;
-		padding: 5px 5px 5px 10px;
-		height: 20px;
-		border-radius: 15px;
-		cursor: default;
-		margin: auto; margin-right: 0; /* MAKE ELEMENT VERTICALLY ALIGN TO THE LEFT AGAINST PARENT FLEX ITEM ALIGNMENT*/
-	}
-	#button-icon {
-		cursor: pointer;
-		opacity: .3;
-	}
-	#button-icon:hover {
-		opacity: 1;
-	}
-	#info-bubble {
-		font-size: .7em;
 	}
 	.skill-view {
 		display: flex;

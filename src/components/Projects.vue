@@ -2,34 +2,13 @@
 	<section v-if="projectsFilteredBySkills.length || searchString">
 		<section-title :title="sectionTitle" :id="uiName" />
 		<article>
-			<button
-				@mouseleave="switchInfoBubbleOff"
-				:style="{
-					backgroundColor: isInfoBubbleOn ? theme.tertiaryColor : 'inherit',
-				}"
-			>
-				<span
-					@click="switchInfoBubble"
-					id="button-icon"
-					class="fa-solid fa-circle-info fa-lg"
-					:style="{
-						color: isInfoBubbleOn ? theme.primaryColor : theme.tertiaryColor,
-					}"
-				/>
-				<span
-					v-if="isInfoBubbleOn"
-					id="info-bubble"
-					:style="{
-						color: theme.tertiaryColorContrast,
-					}"
-				>{{ infoBubbleText }}</span>
-			</button>
+			<info-bubble :infoBubbleText="infoBubbleText" />
 			<label for="project-search-input" :style="{ borderBottomColor: theme.tertiaryColor }">
 				<span class="search-icon fa-solid fa-magnifying-glass" :style="{ color: theme.tertiaryColor }" />
 				<input
 					id="project-search-input"
 					type="text"
-					:placeholder="`e.g. ${placeholderSkills}`"
+					:placeholder="`e.g., ${placeholderSkills}`"
 					v-model="searchString"
 				/>
 				<span v-if="searchString" id="search-clear" class="fa-solid fa-xmark search-icon" @click="setSearchString()" />
@@ -61,12 +40,14 @@
 <script setup>
 	// COMPONENTS
 	import SectionTitle from '@/components/SectionTitle.vue'
+	import InfoBubble from '@/components/InfoBubble.vue'
 	
 	// VUE
 	import { ref, computed } from 'vue'
 
 	// UTILS
 	import { getUiText } from '@/utils/ui'
+	import { shuffleArray } from '@/utils/random'
 
 	// STORE
 	import { useThemeStore } from "@/store/theme"
@@ -79,7 +60,6 @@
 	// REF
 	const uiName = ref('projects')
 	const searchString = ref('')
-	const isInfoBubbleOn = ref(false)
 
 	// PROPS
 	const props = defineProps({
@@ -109,11 +89,14 @@
 	}))
 	const placeholderSkills = computed(() => {
 		if (props.projects.length) {
-			const skills = projectsSortedBySkillCountDesc.value[0].skills
-			return skills.length
-				? skills.length > 1
-					? skills.sort(() => Math.random() - 0.5).slice(0, 2).join(',')
-					: skills[0]
+			const skills = [].concat(...props.projects.map(project => project.skills))
+			const distinctSkills = Array.from(new Set(skills))
+			const shuffledSkills = shuffleArray(distinctSkills)
+			return shuffledSkills.length
+				? shuffledSkills.length > 1
+					// ? skills.sort(() => Math.random() - 0.5).slice(0, 2).join(',')
+					? shuffledSkills.slice(0, 2).join(',')
+					: shuffledSkills[0]
 				: "leadership,photoshop"
 		} else {
 			return "leadership,photoshop"
@@ -122,8 +105,6 @@
 	const projectsSortedBySkillCountDesc = computed(() => props.projects.sort((a, b) => b.skills.length - a.skills.length))
 
 	// METHODS
-	const switchInfoBubble = () => { isInfoBubbleOn.value = !isInfoBubbleOn.value }
-	const switchInfoBubbleOff = () => { isInfoBubbleOn.value = false }
 	const getLocaleFor = (text) => locale.value[text][uiLanguage.value.code]
 	const setSearchString = (s = '') => { searchString.value = s }
 	const isSkillSearchedFor = (skill) => {
@@ -168,31 +149,6 @@
 	}
 	article > :not(:first-child):not(:last-child) {
 		margin-bottom: 20px;
-	}
-	button {
-		all: unset;
-		border: none;
-		background: none;
-		display: flex;
-		flex-direction: row-reverse;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 10px;
-		padding: 5px 5px 5px 10px;
-		height: 20px;
-		max-width: 350px;
-		border-radius: 15px;
-		cursor: default;
-	}
-	#button-icon {
-		cursor: pointer;
-		opacity: .3;
-	}
-	#button-icon:hover {
-		opacity: 1;
-	}
-	#info-bubble {
-		font-size: .7em;
 	}
 	label {
 		display: flex;
