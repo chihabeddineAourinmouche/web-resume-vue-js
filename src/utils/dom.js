@@ -4,15 +4,16 @@ const setTitle = title => { document.title = title }
 
 const setBodyStyle = style => Object.assign(document.body.style, style)
 
-const watchHorizontalResize = (callback, minWidth = null) => {
+const watchHorizontalResize = (callback, minWidth = null, minWidthDifference = 1) => {
 	let previousWidth = getWindowInnerWidth()
 	window.addEventListener('resize', () => {
 		const currentWidth = getWindowInnerWidth()
-		const widthDifference = currentWidth - previousWidth
-		if (widthDifference !== 0 && minWidth !== null ? !(currentWidth < minWidth && previousWidth < minWidth) : true) {
+		const widthDifference = Math.abs(currentWidth - previousWidth)
+		// ONLY callback WHEN WIDTH DIFFERENCE IS minWidthDifference
+		if (widthDifference > minWidthDifference && (minWidth !== null ? !(currentWidth < minWidth && previousWidth < minWidth) : true)) {
+			previousWidth = currentWidth
 			callback()
 		}
-		previousWidth = currentWidth
 	})
 }
 

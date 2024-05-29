@@ -20,12 +20,20 @@
 					<ul class="project-skill-list">
 						<li v-for="skill in project.skills" :key="skill">
 							<span
-								@click="!isSkillSearchedFor(skill) && setSearchString(skill)"
+								@click="isSkillSearchedFor(skill) ? setSearchString() : setSearchString(skill)"
+								@mousemove="(event) => {
+									event.target.style.backgroundColor = theme.secondaryColor
+									event.target.style.color = theme.secondaryColorContrast
+								}"
+								@mouseleave="(event) => {
+									event.target.style.backgroundColor = isSkillSearchedFor(skill) ? theme.secondaryColor : theme.tertiaryColor
+									event.target.style.color = isSkillSearchedFor(skill) ? theme.secondaryColorContrast : theme.tertiaryColorContrast
+								}"
 								class="project-skill"
 								:style="{
 									backgroundColor: isSkillSearchedFor(skill) ? theme.secondaryColor : theme.tertiaryColor,
 									color: isSkillSearchedFor(skill) ? theme.secondaryColorContrast : theme.tertiaryColorContrast,
-									cursor: isSkillSearchedFor(skill) ? 'initial' : 'pointer',
+									cursor: 'pointer',
 								}"
 							>{{ skill }}</span>
 						</li>

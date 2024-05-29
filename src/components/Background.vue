@@ -33,11 +33,24 @@
 	
 	// COMPUTED
 	const theme = computed(themeStore.getTheme)
+	const particleRepeatTimes = computed(() => {
+		// RULE OF THUMB FOR ICON DENSITY
+		return theme.value.backgroundIcons
+			? theme.value.backgroundIcons.length <= 5
+				? 8
+				: theme.value.backgroundIcons.length <= 10
+					? 4
+					: theme.value.backgroundIcons.length <= 20
+						? 2
+						: 1
+			: 2
+	})
 	const particles  = computed(() => ptcls.value)
 
 	// METHODS
 	const generateParticles = () => {
-		const faClassNames = [].concat(...Array(3).fill(theme.value.backgroundIcons))
+		const repeatTimes = particleRepeatTimes.value
+		const faClassNames = [].concat(...Array(repeatTimes).fill(theme.value.backgroundIcons))
 		const randomSubset = faClassNames
 			.slice()
 			.sort(() => Math.random() - 0.5)
@@ -65,7 +78,7 @@
 	// LIFECYCLE HOOKS
 	onBeforeMount(() => {
 		init()
-		watchHorizontalResize(onHorizontalResize, MIN_WIDTH)
+		watchHorizontalResize(onHorizontalResize, MIN_WIDTH, 100)
 	})
 	onBeforeUpdate(updateParticles)
 </script>

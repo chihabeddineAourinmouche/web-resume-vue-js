@@ -1,5 +1,6 @@
 <template>
-	<button
+	<span
+		class="info-bubble"
 		@mouseleave="switchInfoBubbleOff"
 		:style="{
 			backgroundColor: isInfoBubbleOn ? theme.tertiaryColor : 'inherit',
@@ -7,20 +8,19 @@
 	>
 		<span
 			@click="switchInfoBubble"
-			id="button-icon"
-			class="fa-solid fa-circle-info fa-lg"
+			class="info-bubble-icon fa-solid fa-circle-info fa-lg"
 			:style="{
 				color: isInfoBubbleOn ? theme.primaryColor : theme.tertiaryColor,
 			}"
 		/>
 		<span
 			v-if="isInfoBubbleOn"
-			id="info-bubble"
+			class="info-bubble-text"
 			:style="{
 				color: theme.tertiaryColorContrast,
 			}"
 		>{{ infoBubbleText }}</span>
-	</button>
+	</span>
 </template>
 
 <script setup>
@@ -50,7 +50,7 @@
 </script>
 
 <style scoped>
-	button {
+	.info-bubble {
 		all: unset;
 		border: none;
 		background: none;
@@ -59,21 +59,21 @@
 		justify-content: flex-end;
 		align-items: center;
 		gap: 10px;
-		padding: 5px 5px 5px 10px;
+		padding: 5px;
 		height: 20px;
 		max-width: 490px;
-		border-radius: 15px;
+		border-radius: 5px 15px 15px 5px;
 		cursor: default;
 		margin: auto; margin-right: 0; /* MAKE ELEMENT VERTICALLY ALIGN TO THE LEFT AGAINST PARENT FLEX ITEM ALIGNMENT*/
-	}
-	#button-icon {
-		cursor: pointer;
 		opacity: .3;
 	}
-	#button-icon:hover {
+	.info-bubble:hover {
 		opacity: 1;
 	}
-	#info-bubble {
+	.info-bubble-icon {
+		cursor: pointer;
+	}
+	.info-bubble-text {
 		font-size: .7em;
 	}
 </style>

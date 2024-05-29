@@ -6,6 +6,14 @@
 			<h3>{{ filterHintText }}</h3>
 			<ul id="filter">
 				<li
+					@mousemove="(event) => {
+						event.target.style.backgroundColor = theme.secondaryColor
+						event.target.style.color = theme.secondaryColorContrast
+					}"
+					@mouseleave="(event) => {
+						event.target.style.backgroundColor = categorySelected(category) ? theme.secondaryColor : theme.tertiaryColor
+						event.target.style.color = categorySelected(category) ? theme.secondaryColorContrast : theme.tertiaryColorContrast
+					}"
 					class="filter-criteria"
 					v-for="category in skillCategorySet" :key="category"
 					:style="{
