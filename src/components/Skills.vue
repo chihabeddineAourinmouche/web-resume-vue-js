@@ -29,7 +29,7 @@
 				<li class="skill" v-for="s in filteredSkills" :key="s.name">
 					<a :href="`#${skillLink}`" @click="$emit('onUpdateProjectSearchString', s.name)">
 						<star-rating :rating="s.level" />
-						<span class="skill-name">{{ s.name }}</span>
+						<span :title="s.category" class="skill-name">{{ s.name }}</span>
 					</a>
 				</li>
 			</ul>
@@ -39,7 +39,7 @@
 						<li class="skill" v-for="s in segment" :key="s.name">
 							<a href="#projects" @click="$emit('onUpdateProjectSearchString', s.name)">
 								<star-rating :rating="s.level" />
-								<span class="skill-name">{{ s.name }}</span>
+								<span :title="s.category" class="skill-name">{{ s.name }}</span>
 							</a>
 						</li>
 					</ul>
