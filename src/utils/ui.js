@@ -1,5 +1,3 @@
-import ContactAndLanguages from "../components/ContactAndLanguages.vue"
-
 const getUiText = (ui) => ({
 	skills: {
 		sectiontitletext: { en: 'Skills', es: 'Habilidades', fr: 'Compétences' },
